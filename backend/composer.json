@@ -1,5 +1,5 @@
 {
-  "name": "hexatan/employeeDB",
+  "name": "hexat/employee-db",
   "description": "A project for the engineer test.",
   "type": "project",
   "require": {
@@ -19,6 +19,6 @@
     }
   },
   "scripts": {
-    "test": "phpunit"
+    "test": "phpunit ./tests"
   }
 }
