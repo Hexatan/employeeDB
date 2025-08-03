@@ -22,6 +22,7 @@ services:
     # Build the image from the Dockerfile in the 'backend' directory
     build:
       context: ./backend
+      dockerfile: Dockerfile
     container_name: ${API_CONTAINER_NAME}
     restart: unless-stopped
     depends_on:

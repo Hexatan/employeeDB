@@ -17,12 +17,12 @@ This project is a simple employee database management system.
 
 #### Using Docker
 
-1. Clone the repository.
-2. Navigate to the project root directory.
+1. Clone the repository. `git clone https://github.com/Hexatan/employeeDB`
+2. Navigate to the project root directory. `cd employeeDB`
 3. Copy the template: `copy .env.example .env`
 4. Edit `.env` with your values
-5. Run `docker-compose up --env-file .env -d --build` to start the services.
-6. The backend API will be available at `http://localhost:8080`.
+5. Run `docker-compose up -d --build` to start the services.
+6. The backend API will be available at `http://localhost:8080/api`.
 7. The frontend application will be available at `http://localhost:8081`.
 
 ## Tech Stack
@@ -250,8 +250,6 @@ docker-compose -f docker-compose.prod.yml logs
 
 ### API Enhancements
 
-The new REST API architecture makes it easy to add the following enhancements:
-
 *   **Authentication Middleware:** Implement JWT or session-based authentication to secure API endpoints and control access to sensitive employee data.
 *   **Rate Limiting:** Add request throttling to prevent API abuse and ensure fair usage across different clients.
 *   **Request Logging:** Implement comprehensive logging for API requests, responses, and errors for monitoring and debugging purposes.
@@ -265,6 +263,7 @@ The new REST API architecture makes it easy to add the following enhancements:
 *   **Advanced Search & Filtering:** Add comprehensive search functionality with filters by company, salary range, and other employee attributes.
 *   **Data Export:** Implement client-side data export functionality (CSV, Excel, PDF) for employee lists and reports.
 *   **Bulk Operations:** Add support for bulk employee operations like mass email updates, salary adjustments, or company transfers.
+*   **Two step import:** Add a second step in the import if we detect duplicated value while importing.
 *   **Advanced Table Features:** Implement column sorting, resizing, and customizable column visibility for better data management.
 *   **Internationalization (i18n):** Add multi-language support for global deployment.
 *   **Dark Mode:** Implement theme switching between light and dark modes for better user experience.
