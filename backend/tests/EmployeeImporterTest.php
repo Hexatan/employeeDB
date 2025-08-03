@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\EmployeeImporter;
-use App\Database;
+use App\Services\EmployeeImporter;
+use App\Infrastructure\Database;
 use PHPUnit\Framework\TestCase;
 use PDO;
 

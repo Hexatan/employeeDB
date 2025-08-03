@@ -1,14 +1,32 @@
 <?php
-namespace App;
+namespace App\Infrastructure;
+
 use PDO;
 use PDOException;
 
+/**
+ * Database connection class implementing the Singleton pattern.
+ * 
+ * This class ensures only one database connection is created per request,
+ * which helps optimize resource usage and maintain consistency.
+ */
 class Database {
     private static ?PDO $instance = null;
 
     private function __construct() {}
+
     private function __clone() {}
 
+    /**
+     * Get the singleton PDO database instance.
+     * 
+     * Creates a new PDO connection if one doesn't exist, otherwise returns
+     * the existing instance. Database credentials are read from environment
+     * variables for security.
+     * 
+     * @return PDO The database connection instance
+     * @throws PDOException When database connection fails
+     */
     public static function getInstance(): PDO {
         if (self::$instance === null) {
             $db_host = getenv('DB_HOST');

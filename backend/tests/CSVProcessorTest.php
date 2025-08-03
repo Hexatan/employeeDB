@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\CsvProcessor;
+use App\Services\CsvProcessor;
 use PHPUnit\Framework\TestCase;
 
 class CsvProcessorTest extends TestCase

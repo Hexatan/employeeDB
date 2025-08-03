@@ -68,12 +68,12 @@ If you’re experiencing a CORS error when setting up your docker environment, y
 
 *enable modrewrite in your Dockerfile*
 
-```jsx
+```dockerfile
 RUN a2enmod rewrite
 ```
 
 *add headers in your index.php file*
 
-```jsx
+```php
 header("Access-Control-Allow-Origin: *");
 ```
