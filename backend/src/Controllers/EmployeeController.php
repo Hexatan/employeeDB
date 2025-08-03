@@ -83,7 +83,7 @@ class EmployeeController extends Controller
     /**
      * Update an employee's email address.
      * 
-     * Currently supports updating only the email field for an employee.
+     * Currently, supports updating only the email field for an employee.
      * Validates the employee ID, email format, and employee existence
      * before performing the update. Returns the updated employee data
      * upon successful completion.

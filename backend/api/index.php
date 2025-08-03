@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 use App\Infrastructure\Router;
 use App\Controllers\EmployeeController;
 use App\Controllers\CompanyController;
+use App\Controllers\UploadController;
 
 $router = new Router();
 
@@ -44,6 +45,12 @@ $router->get('/companies/salaries', function() {
     $controller->salaries();
 });
 
+// File upload route
+$router->post('/upload', function() {
+    $controller = new UploadController();
+    $controller->upload();
+});
+
 // Health check route
 $router->get('/', function() {
     header('Content-Type: application/json');
@@ -58,7 +65,8 @@ $router->get('/', function() {
             'GET /companies' => 'List all companies',
             'GET /companies/{id}' => 'Get company details with statistics',
             'GET /companies/{id}/employees' => 'Get employees for specific company',
-            'GET /salaries' => 'Get average salaries by company',
+            'GET /companies/salaries' => 'Get average salaries by company',
+            'POST /upload' => 'Upload CSV file to import employee data',
         ]
     ]);
 });
