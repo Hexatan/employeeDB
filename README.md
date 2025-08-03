@@ -31,6 +31,126 @@ This project is a simple employee database management system.
 *   **Frontend:** Vue.js 3 with TypeScript, Vite, Pinia (state management), Vue Router
 *   **Containerization:** Docker
 
+## API Documentation
+
+The backend provides a RESTful API with the following endpoints:
+
+### Employee Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/employees` | List all employees |
+| `GET` | `/employees/{id}` | Get specific employee by ID |
+| `PUT` | `/employees/{id}` | Update employee email |
+
+### Company Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/companies` | List all companies |
+| `GET` | `/companies/{id}` | Get company details with statistics |
+| `GET` | `/companies/{id}/employees` | Get employees for specific company |
+| `GET` | `/salaries` | Get average salaries by company |
+
+### File Upload Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/upload` | Upload CSV file to import employee data |
+
+### Health Check
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | API health check and endpoint listing |
+
+### API Usage Examples
+
+#### Get all employees
+```bash
+curl -X GET http://localhost:8080/employees
+```
+
+#### Get specific employee
+```bash
+curl -X GET http://localhost:8080/employees/1
+```
+
+#### Update employee email
+```bash
+curl -X PUT http://localhost:8080/employees/1 \
+  -H "Content-Type: application/json" \
+  -d '{"email": "newemail@example.com"}'
+```
+
+#### Upload CSV file
+```bash
+curl -X POST http://localhost:8080/upload \
+  -F "file=@employees.csv"
+```
+
+#### Get company salary statistics
+```bash
+curl -X GET http://localhost:8080/salaries
+```
+
+### Response Format
+
+All API responses are returned in JSON format. Successful responses typically include:
+- **200 OK**: Successful GET/PUT requests
+- **201 Created**: Successful POST requests
+- **400 Bad Request**: Invalid input data
+- **404 Not Found**: Resource not found
+- **500 Internal Server Error**: Server-side errors
+
+## Project Structure
+
+```
+employeeDB/
+├── backend/                    # PHP backend application
+│   ├── api/                   # API entry points
+│   │   ├── index.php         # Main API router and endpoints
+│   │   └── .htaccess         # Apache URL rewriting rules
+│   ├── src/                  # PHP source code
+│   │   ├── Controllers/      # API controllers
+│   │   ├── Infrastructure/   # Database and routing infrastructure
+│   │   └── Services/         # Business logic services
+│   ├── tests/                # PHPUnit test files
+│   ├── vendor/               # Composer dependencies
+│   ├── composer.json         # PHP dependencies and scripts
+│   ├── composer.lock         # Locked dependency versions
+│   └── Dockerfile           # Backend container configuration
+├── frontend/                  # Vue.js frontend application
+│   ├── src/                  # Vue.js source code
+│   │   ├── components/       # Vue components
+│   │   ├── stores/           # Pinia state management
+│   │   ├── router/           # Vue Router configuration
+│   │   └── __tests__/        # Frontend unit tests
+│   ├── public/               # Static assets
+│   ├── dist/                 # Built frontend files
+│   ├── package.json          # Node.js dependencies and scripts
+│   ├── vite.config.ts        # Vite build configuration
+│   └── tsconfig.json         # TypeScript configuration
+├── database/                  # Database initialization
+│   └── database.sql          # MySQL schema and sample data
+├── .env.example              # Environment variables template
+├── docker-compose.yml        # Development Docker configuration
+├── docker-compose.prod.yml   # Production Docker configuration
+└── README.md                 # Project documentation
+```
+
+### Key Files and Their Purpose
+
+- **`backend/api/index.php`**: Main API router that defines all REST endpoints
+- **`backend/src/Controllers/`**: Contains controller classes that handle API requests
+- **`backend/src/Infrastructure/`**: Database connections and routing infrastructure
+- **`database/database.sql`**: MySQL database schema with sample employee data
+- **`frontend/src/App.vue`**: Main Vue.js application component
+- **`frontend/src/components/`**: Reusable Vue.js components for the UI
+- **`.env.example`**: Template for environment variables (copy to `.env`)
+- **`docker-compose.yml`**: Development environment with hot-reload
+- **`docker-compose.prod.yml`**: Production environment with optimised builds
+
 ## Running Tests
 
 The project includes comprehensive test suites for both backend and frontend components.
@@ -142,3 +262,13 @@ The new REST API architecture makes it easy to add the following enhancements:
 
 ### Frontend Development
 *   **Real-time Updates:** Implement WebSocket connections for real-time data updates across multiple clients.
+*   **Advanced Search & Filtering:** Add comprehensive search functionality with filters by company, salary range, and other employee attributes.
+*   **Data Export:** Implement client-side data export functionality (CSV, Excel, PDF) for employee lists and reports.
+*   **Bulk Operations:** Add support for bulk employee operations like mass email updates, salary adjustments, or company transfers.
+*   **Advanced Table Features:** Implement column sorting, resizing, and customizable column visibility for better data management.
+*   **Internationalization (i18n):** Add multi-language support for global deployment.
+*   **Dark Mode:** Implement theme switching between light and dark modes for better user experience.
+
+### Testing & Quality Assurance
+*   **Integration Tests:** Add comprehensive integration tests for API endpoints and database operations.
+*   **End-to-End Testing:** Implement E2E tests using tools like Cypress or Playwright for complete user workflow testing.
