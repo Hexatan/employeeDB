@@ -1,47 +1,44 @@
 <script setup lang="ts">
-import EmployeeList from '@/components/EmployeeList.vue'
-import FileUpload from '@/components/FileUpload.vue'
+import {useRoute, useRouter} from 'vue-router'
 import {BaseButton} from '@/components/ui'
-import {computed, ref} from 'vue'
-import CompanySalaries from '@/components/CompanySalaries.vue'
 
-const showUpload = ref(false)
-const employeeListRef = ref<InstanceType<typeof EmployeeList>>()
-const employeeListEmpty = computed(() => (!employeeListRef.value?.isLoading && !employeeListRef.value?.employees.length))
+const router = useRouter()
+const route = useRoute()
 
-const handleUploadSuccess = () => {
-  // Refresh the employee list after successful upload
-  if (employeeListRef.value) {
-    employeeListRef.value.refresh()
-  }
+const navigateToEmployees = () => {
+  router.push('/employees')
+}
+
+const navigateToStatistics = () => {
+  router.push('/statistics')
 }
 </script>
 
 <template>
   <div class="app-container">
-    <!-- Header -->
+    <!-- Header with Navigation -->
     <header class="app-header">
       <h1>Employee DB</h1>
-      <BaseButton v-show="!employeeListEmpty" @click="showUpload = !showUpload" class="sidebar-toggle">
-        {{ showUpload ? 'Hide Importer' : 'Import CSV' }}
-      </BaseButton>
+      <nav class="app-navigation">
+        <BaseButton
+          @click="navigateToEmployees"
+          :class="{ 'active': route.path === '/employees' }"
+          variant="outline"
+        >
+          Employees
+        </BaseButton>
+        <BaseButton
+          @click="navigateToStatistics"
+          :class="{ 'active': route.path === '/statistics' }"
+          variant="outline"
+        >
+          Statistics
+        </BaseButton>
+      </nav>
     </header>
 
-    <!-- Main Layout -->
-    <div class="app-layout">
-      <!-- Sidebar -->
-      <aside class="sidebar" :class="{ 'sidebar-open': showUpload || employeeListEmpty }">
-        <div class="sidebar-content">
-          <FileUpload @upload-success="handleUploadSuccess"/>
-        </div>
-      </aside>
-
-      <!-- Main Content -->
-      <main class="main-content" :class="{ 'sidebar-open': showUpload || employeeListEmpty }">
-        <EmployeeList v-show="!employeeListEmpty" ref="employeeListRef"/>
-        <CompanySalaries></CompanySalaries>
-      </main>
-    </div>
+    <!-- Router View -->
+    <router-view/>
   </div>
 </template>
 
@@ -67,66 +64,38 @@ const handleUploadSuccess = () => {
   color: #333;
 }
 
-.sidebar-toggle {
-  min-width: 120px;
-}
-
-.app-layout {
+.app-navigation {
   display: flex;
-  flex: 1;
-  position: relative;
+  gap: 1rem;
 }
 
-.sidebar {
-  position: absolute;
-  left: -350px; /* Hidden by default */
-  width: 350px;
-  height: calc(100vh - 80px);
-  background-color: #ffffff;
-  border-right: 1px solid #dee2e6;
-  box-shadow: inset 2px 0 8px rgba(0, 0, 0, 0.1);
-  transition: left 0.3s ease-in-out;
-  z-index: 1000;
-  overflow-y: auto;
+.app-navigation button {
+  transition: all 0.2s ease;
 }
 
-.sidebar.sidebar-open {
-  left: 0;
+.app-navigation button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }
 
-.sidebar-content {
-  padding: 1.5rem;
-}
-
-.main-content {
-  flex: 1;
-  padding: 2rem;
-  transition: margin-left 0.3s ease-in-out;
-  background-color: #f8f9fa;
-  min-height: calc(100vh - 80px);
-}
-
-.main-content.sidebar-open {
-  margin-left: 350px;
+.app-navigation button:hover {
+  background-color: #0056b3;
+  color: white;
+  border-color: #0056b3;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
   .app-header {
     padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .sidebar {
+  .app-navigation {
     width: 100%;
-    left: -100%;
-  }
-
-  .main-content.sidebar-open {
-    margin-left: 0;
-  }
-
-  .sidebar.sidebar-open {
-    left: 0;
+    justify-content: center;
   }
 }
 </style>

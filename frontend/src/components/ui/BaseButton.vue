@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 interface Props {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'outline'
   size?: 'small' | 'medium' | 'large'
   disabled?: boolean
   loading?: boolean
@@ -50,7 +50,7 @@ const handleClick = (event: MouseEvent) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
@@ -138,6 +138,17 @@ const handleClick = (event: MouseEvent) => {
 
 .base-button--info:hover:not(.base-button--disabled):not(.base-button--loading) {
   background-color: #138496;
+}
+
+.base-button--outline {
+  background-color: transparent;
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.base-button--outline:hover:not(.base-button--disabled):not(.base-button--loading) {
+  background-color: #007bff;
+  color: white;
 }
 
 /* States */
