@@ -1,0 +1,62 @@
+services:
+  # The Database Service (MySQL) - Same as development
+  db:
+    image: mysql:${MYSQL_VERSION}
+    container_name: ${DB_CONTAINER_NAME}
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      # Persist database data using a named volume
+      - db_data:/var/lib/mysql
+      # Mount the database initialization script
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+  # The Web Server Service (PHP + Apache) - Production version without xdebug
+  api:
+    # Build the production image from the production Dockerfile
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: ${API_CONTAINER_NAME}
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "${API_PORT}:80"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+    networks:
+      - app-network
+
+  # Frontend Service - Production version with built assets served by nginx
+  frontend:
+    # Build the production image from the production Dockerfile
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    container_name: ${FRONTEND_CONTAINER_NAME}
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT}:80"
+    networks:
+      - app-network
+
+# Define the named volume for data persistence
+volumes:
+  db_data:
+
+# Define network for service communication
+networks:
+  app-network:
+    driver: bridge

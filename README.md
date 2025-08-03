@@ -84,6 +84,45 @@ The frontend test suite includes:
 *   Component unit tests with Vue Test Utils
 *   TypeScript type checking and ESLint code quality checks
 
+
+## Production Deployment
+
+The production setup uses multi-stage builds for optimisation:
+
+**Backend (API):**
+- Removes xdebug extension
+- Installs only production dependencies (`--no-dev`)
+- Sets proper file permissions
+- Optimizes for production use
+
+**Frontend:**
+- Stage 1: Builds Vue.js application with Vite
+- Stage 2: Serves built assets with nginx
+- Includes gzip compression and security headers
+- Optimized for SPA routing
+
+### 1. Prepare Environment
+```bash
+# Copy and customize production environment
+copy .env.example .env.prod
+# Edit .env.prod.local with your production passwords
+```
+
+### 2. Build and Deploy
+```bash
+# Build and start production services
+docker-compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+```
+
+### 3. Verify Deployment
+```bash
+# Check all services are running
+docker-compose -f docker-compose.prod.yml ps
+
+# View logs
+docker-compose -f docker-compose.prod.yml logs
+```
+
 ## Future Improvements
 
 ### Database & Performance
