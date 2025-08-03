@@ -17,8 +17,8 @@
           {
             'base-input__field--error': hasError,
             'base-input__field--success': hasSuccess,
-            'base-input__field--disabled': disabled
-          }
+            'base-input__field--disabled': disabled,
+          },
         ]"
         :value="modelValue"
         @input="handleInput"
@@ -70,7 +70,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   disabled: false,
   readonly: false,
-  required: false
+  required: false,
 })
 
 const emit = defineEmits<Emits>()

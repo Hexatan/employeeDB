@@ -10,9 +10,7 @@
           accept=".csv"
           class="file-input"
         />
-        <div v-if="selectedFile" class="file-info">
-          Selected: {{ selectedFile.name }}
-        </div>
+        <div v-if="selectedFile" class="file-info">Selected: {{ selectedFile.name }}</div>
       </div>
       <button type="submit" :disabled="!selectedFile || isUploading" class="upload-btn">
         {{ isUploading ? 'Uploading...' : 'Upload File' }}
@@ -31,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue'
 import BaseAlert from './ui/BaseAlert.vue'
 
 // Define emits
@@ -157,7 +155,6 @@ const handleSubmit = async () => {
   cursor: not-allowed;
   opacity: 0.6;
 }
-
 
 /* Responsive adjustments for very narrow sidebars */
 @media (max-width: 400px) {

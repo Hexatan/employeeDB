@@ -2,7 +2,7 @@
   <div class="employee-list">
     <h2>Employee List</h2>
 
-    <BaseLoading v-if="isLoading" text="Loading employees..."/>
+    <BaseLoading v-if="isLoading" text="Loading employees..." />
 
     <BaseAlert
       v-else-if="error"
@@ -12,19 +12,9 @@
       @dismiss="error = ''"
     />
 
-    <BaseAlert
-      v-else-if="employees.length === 0"
-      variant="info"
-      message="No employees found."
-    />
+    <BaseAlert v-else-if="employees.length === 0" variant="info" message="No employees found." />
 
-    <BaseTable
-      v-else
-      :data="employees"
-      :columns="tableColumns"
-      striped
-      hoverable
-    >
+    <BaseTable v-else :data="employees" :columns="tableColumns" striped hoverable>
       <template #cell-email="{ row, value }">
         <span v-if="editingEmployeeId !== row.id">
           {{ value }}
@@ -39,9 +29,7 @@
         />
       </template>
 
-      <template #cell-salary="{ value }">
-        ${{ value?.toLocaleString() || 'N/A' }}
-      </template>
+      <template #cell-salary="{ value }"> ${{ value?.toLocaleString() || 'N/A' }} </template>
 
       <template #cell-actions="{ row }">
         <BaseButton
@@ -53,20 +41,8 @@
           Edit
         </BaseButton>
         <div v-else class="edit-actions">
-          <BaseButton
-            variant="primary"
-            size="small"
-            @click="saveEmail(row.id)"
-          >
-            Save
-          </BaseButton>
-          <BaseButton
-            variant="outline"
-            size="small"
-            @click="cancelEdit"
-          >
-            Cancel
-          </BaseButton>
+          <BaseButton variant="primary" size="small" @click="saveEmail(row.id)"> Save </BaseButton>
+          <BaseButton variant="outline" size="small" @click="cancelEdit"> Cancel </BaseButton>
         </div>
       </template>
     </BaseTable>
@@ -74,9 +50,9 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
-import {BaseAlert, BaseButton, BaseInput, BaseLoading, BaseTable} from '@/components/ui'
-import {useUIStore} from '@/stores/ui'
+import { onMounted, ref } from 'vue'
+import { BaseAlert, BaseButton, BaseInput, BaseLoading, BaseTable } from '@/components/ui'
+import { useUIStore } from '@/stores/ui'
 
 interface Employee {
   id: number
@@ -89,12 +65,12 @@ interface Employee {
 
 // Table columns configuration
 const tableColumns = [
-  {key: 'id', label: 'ID', sortable: true},
-  {key: 'name', label: 'Name', sortable: true},
-  {key: 'email', label: 'Email', sortable: true},
-  {key: 'company_name', label: 'Company', sortable: true},
-  {key: 'salary', label: 'Salary', align: 'right' as const, sortable: true},
-  {key: 'actions', label: 'Actions', align: 'right' as const},
+  { key: 'id', label: 'ID', sortable: true },
+  { key: 'name', label: 'Name', sortable: true },
+  { key: 'email', label: 'Email', sortable: true },
+  { key: 'company_name', label: 'Company', sortable: true },
+  { key: 'salary', label: 'Salary', align: 'right' as const, sortable: true },
+  { key: 'actions', label: 'Actions', align: 'right' as const },
 ]
 
 const employees = ref<Employee[]>([])
@@ -163,7 +139,7 @@ const saveEmail = async (employeeId: number) => {
     }
 
     // Update local data
-    const employeeIndex = employees.value.findIndex(emp => emp.id === employeeId)
+    const employeeIndex = employees.value.findIndex((emp) => emp.id === employeeId)
     if (employeeIndex !== -1) {
       employees.value[employeeIndex].email = editingEmail.value
     }

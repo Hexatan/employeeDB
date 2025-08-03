@@ -15,27 +15,34 @@ This project is a simple employee database management system.
 
 ### Installation
 
+#### Using Docker
+
 1.  Clone the repository.
 2.  Navigate to the project root directory.
 3.  Run `docker-compose up -d --build` to start the services.
-4.  The application will be available at `http://localhost:8080`.
+4.  The backend API will be available at `http://localhost:8080`.
+5.  The frontend application will be available at `http://localhost:8081`.
 
 ## Tech Stack
 
 *   **Backend:** PHP, Apache, MySQL
-*   **Frontend:** Vue.js (to be implemented)
+*   **Frontend:** Vue.js 3 with TypeScript, Vite, Pinia (state management), Vue Router
 *   **Containerization:** Docker
 
 ## Running Tests
 
-The project includes PHPUnit tests for the backend components. Tests are located in the `backend/tests/` directory.
+The project includes comprehensive test suites for both backend and frontend components.
 
-### Prerequisites for Testing
+### Backend Tests
+
+Backend tests use PHPUnit and are located in the `backend/tests/` directory.
+
+#### Prerequisites for Backend Testing
 
 *   Docker and Docker Compose (recommended)
 *   OR PHP 8.4+ with Composer installed locally
 
-### Running Tests with Docker
+#### Running Backend Tests with Docker
 
 1.  Ensure the Docker containers are running:
     ```bash
@@ -44,14 +51,36 @@ The project includes PHPUnit tests for the backend components. Tests are located
 
 2.  Run tests inside the backend container:
     ```bash
-    docker-compose exec backend composer test
+    docker-compose exec api composer test
     ```
 
-### Test Coverage
+#### Backend Test Coverage
 
-The current test suite includes:
+The current backend test suite includes:
 *   **CSVProcessorTest.php** - Tests for CSV file processing functionality
 *   **EmployeeImporterTest.php** - Tests for employee data import functionality
+
+### Frontend Tests
+
+Frontend tests use Vitest with Vue Test Utils and are located in the `frontend/src/__tests__/` directory.
+
+#### Running Frontend Tests with Docker
+
+1.  Ensure the Docker containers are running:
+    ```bash
+    docker-compose up -d
+    ```
+
+2.  Run tests inside the backend container:
+    ```bash
+    docker-compose exec frontend npm run test:unit
+    ```
+
+#### Frontend Test Coverage
+
+The frontend test suite includes:
+*   Component unit tests with Vue Test Utils
+*   TypeScript type checking and ESLint code quality checks
 
 ## Future Improvements
 

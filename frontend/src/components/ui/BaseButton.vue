@@ -6,8 +6,8 @@
       `base-button--${size}`,
       {
         'base-button--disabled': disabled,
-        'base-button--loading': loading
-      }
+        'base-button--loading': loading,
+      },
     ]"
     :disabled="disabled || loading"
     @click="handleClick"
@@ -18,9 +18,11 @@
 </template>
 
 <script setup lang="ts">
+import type { ButtonVariant, ComponentSize } from './index'
+
 interface Props {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'outline'
-  size?: 'small' | 'medium' | 'large'
+  variant?: ButtonVariant
+  size?: ComponentSize
   disabled?: boolean
   loading?: boolean
 }
@@ -33,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
   size: 'medium',
   disabled: false,
-  loading: false
+  loading: false,
 })
 
 const emit = defineEmits<Emits>()

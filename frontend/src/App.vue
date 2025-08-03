@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {useRoute, useRouter} from 'vue-router'
-import {BaseButton} from '@/components/ui'
+import { useRoute, useRouter } from 'vue-router'
+import { BaseButton } from '@/components/ui'
 
 const router = useRouter()
 const route = useRoute()
@@ -22,14 +22,14 @@ const navigateToStatistics = () => {
       <nav class="app-navigation">
         <BaseButton
           @click="navigateToEmployees"
-          :class="{ 'active': route.path === '/employees' }"
+          :class="{ active: route.path === '/employees' }"
           variant="outline"
         >
           Employees
         </BaseButton>
         <BaseButton
           @click="navigateToStatistics"
-          :class="{ 'active': route.path === '/statistics' }"
+          :class="{ active: route.path === '/statistics' }"
           variant="outline"
         >
           Statistics
@@ -38,7 +38,7 @@ const navigateToStatistics = () => {
     </header>
 
     <!-- Router View -->
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

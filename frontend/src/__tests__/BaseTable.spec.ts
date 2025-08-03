@@ -1,19 +1,19 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import BaseTable from '../components/ui/BaseTable.vue'
+import BaseTable from '@/components/ui/BaseTable.vue'
 
 describe('BaseTable', () => {
   const mockData = [
     { id: 1, name: 'John Doe', age: 30, email: 'john@example.com', salary: 50000 },
     { id: 2, name: 'Jane Smith', age: 25, email: 'jane@example.com', salary: 60000 },
-    { id: 3, name: 'Bob Johnson', age: 35, email: 'bob@example.com', salary: 45000 }
+    { id: 3, name: 'Bob Johnson', age: 35, email: 'bob@example.com', salary: 45000 },
   ]
 
   const mockColumns = [
     { key: 'name', label: 'Name', sortable: true },
     { key: 'age', label: 'Age', sortable: true, align: 'center' as const },
     { key: 'email', label: 'Email' },
-    { key: 'salary', label: 'Salary', sortable: true, align: 'right' as const }
+    { key: 'salary', label: 'Salary', sortable: true, align: 'right' as const },
   ]
 
   describe('Rendering', () => {
@@ -21,8 +21,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       expect(wrapper.find('.base-table').exists()).toBe(true)
@@ -36,8 +36,8 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          title: 'Employee Table'
-        }
+          title: 'Employee Table',
+        },
       })
 
       expect(wrapper.find('.base-table__header').exists()).toBe(true)
@@ -49,8 +49,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       expect(wrapper.find('.base-table__header').exists()).toBe(false)
@@ -60,8 +60,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const headers = wrapper.findAll('.base-table__th')
@@ -76,8 +76,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
@@ -88,8 +88,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const firstRowCells = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')
@@ -106,8 +106,8 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          striped: true
-        }
+          striped: true,
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
@@ -121,12 +121,12 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          striped: false
-        }
+          striped: false,
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
-      rows.forEach(row => {
+      rows.forEach((row) => {
         expect(row.classes()).not.toContain('base-table__tr--striped')
       })
     })
@@ -136,12 +136,12 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          hoverable: true
-        }
+          hoverable: true,
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
-      rows.forEach(row => {
+      rows.forEach((row) => {
         expect(row.classes()).toContain('base-table__tr--hoverable')
       })
     })
@@ -151,12 +151,12 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          hoverable: false
-        }
+          hoverable: false,
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
-      rows.forEach(row => {
+      rows.forEach((row) => {
         expect(row.classes()).not.toContain('base-table__tr--hoverable')
       })
     })
@@ -167,8 +167,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const ageHeader = wrapper.findAll('.base-table__th')[1]
@@ -182,8 +182,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const salaryHeader = wrapper.findAll('.base-table__th')[3]
@@ -197,8 +197,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const nameHeader = wrapper.findAll('.base-table__th')[0]
@@ -216,8 +216,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const headers = wrapper.findAll('.base-table__th')
@@ -231,8 +231,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const nameHeader = wrapper.findAll('.base-table__th')[0]
@@ -245,8 +245,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const emailHeader = wrapper.findAll('.base-table__th')[2]
@@ -258,8 +258,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const nameHeader = wrapper.findAll('.base-table__th')[0]
@@ -275,8 +275,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const nameHeader = wrapper.findAll('.base-table__th')[0]
@@ -301,8 +301,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const emailHeader = wrapper.findAll('.base-table__th')[2]
@@ -317,8 +317,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const nameHeader = wrapper.findAll('.base-table__th')[0]
@@ -338,8 +338,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const ageHeader = wrapper.findAll('.base-table__th')[1]
@@ -359,8 +359,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const ageHeader = wrapper.findAll('.base-table__th')[1]
@@ -383,8 +383,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const salaryCell = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')[3]
@@ -398,15 +398,15 @@ describe('BaseTable', () => {
           key: 'salary',
           label: 'Salary',
           sortable: true,
-          formatter: (value: number) => `$${value.toLocaleString()}`
-        }
+          formatter: (value: number) => `$${value.toLocaleString()}`,
+        },
       ]
 
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: columnsWithFormatter
-        }
+          columns: columnsWithFormatter,
+        },
       })
 
       const salaryCell = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')[3]
@@ -416,14 +416,14 @@ describe('BaseTable', () => {
     it('handles null and undefined values', () => {
       const dataWithNulls = [
         { id: 1, name: 'John', age: null, email: undefined },
-        { id: 2, name: null, age: 25, email: 'jane@example.com' }
+        { id: 2, name: null, age: 25, email: 'jane@example.com' },
       ]
 
       const wrapper = mount(BaseTable, {
         props: {
           data: dataWithNulls,
-          columns: mockColumns.slice(0, 3)
-        }
+          columns: mockColumns.slice(0, 3),
+        },
       })
 
       const firstRowCells = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')
@@ -439,19 +439,19 @@ describe('BaseTable', () => {
     it('handles nested object properties with dot notation', () => {
       const nestedData = [
         { id: 1, user: { name: 'John', profile: { age: 30 } } },
-        { id: 2, user: { name: 'Jane', profile: { age: 25 } } }
+        { id: 2, user: { name: 'Jane', profile: { age: 25 } } },
       ]
 
       const nestedColumns = [
         { key: 'user.name', label: 'Name' },
-        { key: 'user.profile.age', label: 'Age' }
+        { key: 'user.profile.age', label: 'Age' },
       ]
 
       const wrapper = mount(BaseTable, {
         props: {
           data: nestedData,
-          columns: nestedColumns
-        }
+          columns: nestedColumns,
+        },
       })
 
       const firstRowCells = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')
@@ -462,19 +462,19 @@ describe('BaseTable', () => {
     it('handles missing nested properties gracefully', () => {
       const incompleteData = [
         { id: 1, user: { name: 'John' } }, // missing profile
-        { id: 2 } // missing user entirely
+        { id: 2 }, // missing user entirely
       ]
 
       const nestedColumns = [
         { key: 'user.name', label: 'Name' },
-        { key: 'user.profile.age', label: 'Age' }
+        { key: 'user.profile.age', label: 'Age' },
       ]
 
       const wrapper = mount(BaseTable, {
         props: {
           data: incompleteData,
-          columns: nestedColumns
-        }
+          columns: nestedColumns,
+        },
       })
 
       const firstRowCells = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')
@@ -493,8 +493,8 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          showFooter: true
-        }
+          showFooter: true,
+        },
       })
 
       expect(wrapper.find('.base-table__footer').exists()).toBe(true)
@@ -506,8 +506,8 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          showFooter: false
-        }
+          showFooter: false,
+        },
       })
 
       expect(wrapper.find('.base-table__footer').exists()).toBe(false)
@@ -518,8 +518,8 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          showFooter: true
-        }
+          showFooter: true,
+        },
       })
 
       const countText = wrapper.find('.base-table__count').text()
@@ -531,8 +531,8 @@ describe('BaseTable', () => {
         props: {
           data: [mockData[0]],
           columns: mockColumns,
-          showFooter: true
-        }
+          showFooter: true,
+        },
       })
 
       const countText = wrapper.find('.base-table__count').text()
@@ -544,14 +544,16 @@ describe('BaseTable', () => {
         props: {
           data: mockData,
           columns: mockColumns,
-          showFooter: true
+          showFooter: true,
         },
         slots: {
-          footer: '<div class="custom-footer">Custom footer content</div>'
-        }
+          footer: '<div class="custom-footer">Custom footer content</div>',
+        },
       })
 
-      expect(wrapper.find('.base-table__footer').html()).toContain('<div class="custom-footer">Custom footer content</div>')
+      expect(wrapper.find('.base-table__footer').html()).toContain(
+        '<div class="custom-footer">Custom footer content</div>',
+      )
       expect(wrapper.find('.base-table__count').exists()).toBe(false)
     })
   })
@@ -561,11 +563,11 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
+          columns: mockColumns,
         },
         slots: {
-          'cell-name': '<template #cell-name="{ value }"><strong>{{ value }}</strong></template>'
-        }
+          'cell-name': '<template #cell-name="{ value }"><strong>{{ value }}</strong></template>',
+        },
       })
 
       const nameCell = wrapper.findAll('.base-table__tr')[0].findAll('.base-table__td')[0]
@@ -578,8 +580,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
@@ -590,15 +592,15 @@ describe('BaseTable', () => {
     it('uses custom rowKey prop', () => {
       const customData = [
         { uuid: 'abc123', name: 'John' },
-        { uuid: 'def456', name: 'Jane' }
+        { uuid: 'def456', name: 'Jane' },
       ]
 
       const wrapper = mount(BaseTable, {
         props: {
           data: customData,
           columns: [{ key: 'name', label: 'Name' }],
-          rowKey: 'uuid'
-        }
+          rowKey: 'uuid',
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
@@ -606,16 +608,13 @@ describe('BaseTable', () => {
     })
 
     it('falls back to index when rowKey is missing', () => {
-      const dataWithoutId = [
-        { name: 'John' },
-        { name: 'Jane' }
-      ]
+      const dataWithoutId = [{ name: 'John' }, { name: 'Jane' }]
 
       const wrapper = mount(BaseTable, {
         props: {
           data: dataWithoutId,
-          columns: [{ key: 'name', label: 'Name' }]
-        }
+          columns: [{ key: 'name', label: 'Name' }],
+        },
       })
 
       const rows = wrapper.findAll('.base-table__tr')
@@ -628,8 +627,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: [],
-          columns: mockColumns
-        }
+          columns: mockColumns,
+        },
       })
 
       expect(wrapper.find('.base-table__table').exists()).toBe(true)
@@ -640,8 +639,8 @@ describe('BaseTable', () => {
       const wrapper = mount(BaseTable, {
         props: {
           data: mockData,
-          columns: []
-        }
+          columns: [],
+        },
       })
 
       expect(wrapper.find('.base-table__table').exists()).toBe(true)
@@ -652,7 +651,7 @@ describe('BaseTable', () => {
       const dataWithNulls = [
         { id: 1, name: 'John', age: 30 },
         { id: 2, name: null, age: 25 },
-        { id: 3, name: 'Alice', age: null }
+        { id: 3, name: 'Alice', age: null },
       ]
 
       const wrapper = mount(BaseTable, {
@@ -660,9 +659,9 @@ describe('BaseTable', () => {
           data: dataWithNulls,
           columns: [
             { key: 'name', label: 'Name', sortable: true },
-            { key: 'age', label: 'Age', sortable: true }
-          ]
-        }
+            { key: 'age', label: 'Age', sortable: true },
+          ],
+        },
       })
 
       // Sort by name

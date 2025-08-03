@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import BaseInput from '../components/ui/BaseInput.vue'
+import BaseInput from '@/components/ui/BaseInput.vue'
 
 describe('BaseInput', () => {
   describe('Rendering', () => {
@@ -14,7 +14,7 @@ describe('BaseInput', () => {
 
     it('renders label when provided', () => {
       const wrapper = mount(BaseInput, {
-        props: { label: 'Test Label' }
+        props: { label: 'Test Label' },
       })
 
       expect(wrapper.find('label').exists()).toBe(true)
@@ -29,7 +29,7 @@ describe('BaseInput', () => {
 
     it('shows required indicator when required prop is true', () => {
       const wrapper = mount(BaseInput, {
-        props: { label: 'Test Label', required: true }
+        props: { label: 'Test Label', required: true },
       })
 
       expect(wrapper.find('.base-input__required').exists()).toBe(true)
@@ -38,7 +38,7 @@ describe('BaseInput', () => {
 
     it('does not show required indicator when required prop is false', () => {
       const wrapper = mount(BaseInput, {
-        props: { label: 'Test Label', required: false }
+        props: { label: 'Test Label', required: false },
       })
 
       expect(wrapper.find('.base-input__required').exists()).toBe(false)
@@ -48,10 +48,10 @@ describe('BaseInput', () => {
   describe('Props - Type', () => {
     const inputTypes = ['text', 'email', 'password', 'number', 'tel', 'url', 'search']
 
-    inputTypes.forEach(type => {
+    inputTypes.forEach((type) => {
       it(`applies correct type attribute for ${type} input`, () => {
         const wrapper = mount(BaseInput, {
-          props: { type: type as any }
+          props: { type: type as any },
         })
 
         expect(wrapper.find('input').attributes('type')).toBe(type)
@@ -62,7 +62,7 @@ describe('BaseInput', () => {
   describe('Props - Basic Attributes', () => {
     it('applies placeholder when provided', () => {
       const wrapper = mount(BaseInput, {
-        props: { placeholder: 'Enter text here' }
+        props: { placeholder: 'Enter text here' },
       })
 
       expect(wrapper.find('input').attributes('placeholder')).toBe('Enter text here')
@@ -70,7 +70,7 @@ describe('BaseInput', () => {
 
     it('applies disabled attribute when disabled prop is true', () => {
       const wrapper = mount(BaseInput, {
-        props: { disabled: true }
+        props: { disabled: true },
       })
 
       expect(wrapper.find('input').attributes('disabled')).toBeDefined()
@@ -79,7 +79,7 @@ describe('BaseInput', () => {
 
     it('applies readonly attribute when readonly prop is true', () => {
       const wrapper = mount(BaseInput, {
-        props: { readonly: true }
+        props: { readonly: true },
       })
 
       expect(wrapper.find('input').attributes('readonly')).toBeDefined()
@@ -87,7 +87,7 @@ describe('BaseInput', () => {
 
     it('sets input value from modelValue prop', () => {
       const wrapper = mount(BaseInput, {
-        props: { modelValue: 'test value' }
+        props: { modelValue: 'test value' },
       })
 
       expect(wrapper.find('input').element.value).toBe('test value')
@@ -97,7 +97,7 @@ describe('BaseInput', () => {
   describe('Props - Validation States', () => {
     it('shows error state when errorMessage is provided', () => {
       const wrapper = mount(BaseInput, {
-        props: { errorMessage: 'This field is required' }
+        props: { errorMessage: 'This field is required' },
       })
 
       expect(wrapper.find('input').classes()).toContain('base-input__field--error')
@@ -108,7 +108,7 @@ describe('BaseInput', () => {
 
     it('shows success state when successMessage is provided', () => {
       const wrapper = mount(BaseInput, {
-        props: { successMessage: 'Valid input' }
+        props: { successMessage: 'Valid input' },
       })
 
       expect(wrapper.find('input').classes()).toContain('base-input__field--success')
@@ -119,7 +119,7 @@ describe('BaseInput', () => {
 
     it('shows helper text when provided and no error/success messages', () => {
       const wrapper = mount(BaseInput, {
-        props: { helperText: 'This is helper text' }
+        props: { helperText: 'This is helper text' },
       })
 
       expect(wrapper.find('.base-input__helper').exists()).toBe(true)
@@ -130,8 +130,8 @@ describe('BaseInput', () => {
       const wrapper = mount(BaseInput, {
         props: {
           errorMessage: 'Error message',
-          successMessage: 'Success message'
-        }
+          successMessage: 'Success message',
+        },
       })
 
       expect(wrapper.find('.base-input__error').exists()).toBe(true)
@@ -143,8 +143,8 @@ describe('BaseInput', () => {
       const wrapper = mount(BaseInput, {
         props: {
           successMessage: 'Success message',
-          helperText: 'Helper text'
-        }
+          helperText: 'Helper text',
+        },
       })
 
       expect(wrapper.find('.base-input__success').exists()).toBe(true)
@@ -156,7 +156,7 @@ describe('BaseInput', () => {
   describe('Event Handling', () => {
     it('emits update:modelValue on input for text type', async () => {
       const wrapper = mount(BaseInput, {
-        props: { type: 'text' }
+        props: { type: 'text' },
       })
 
       const input = wrapper.find('input')
@@ -168,7 +168,7 @@ describe('BaseInput', () => {
 
     it('emits update:modelValue with number for number type', async () => {
       const wrapper = mount(BaseInput, {
-        props: { type: 'number' }
+        props: { type: 'number' },
       })
 
       const input = wrapper.find('input')
@@ -216,7 +216,7 @@ describe('BaseInput', () => {
 
     it('does not emit events when disabled', async () => {
       const wrapper = mount(BaseInput, {
-        props: { disabled: true }
+        props: { disabled: true },
       })
 
       const input = wrapper.find('input')
@@ -245,7 +245,7 @@ describe('BaseInput', () => {
 
     it('associates label with input using for attribute', () => {
       const wrapper = mount(BaseInput, {
-        props: { label: 'Test Label' }
+        props: { label: 'Test Label' },
       })
 
       const input = wrapper.find('input')
@@ -261,8 +261,8 @@ describe('BaseInput', () => {
           label: 'Email',
           type: 'email',
           required: true,
-          placeholder: 'Enter your email'
-        }
+          placeholder: 'Enter your email',
+        },
       })
 
       const input = wrapper.find('input')
@@ -283,8 +283,8 @@ describe('BaseInput', () => {
           helperText: 'We will never share your email',
           required: true,
           disabled: false,
-          readonly: false
-        }
+          readonly: false,
+        },
       })
 
       expect(wrapper.find('label').text()).toBe('Email Address *')
@@ -296,7 +296,7 @@ describe('BaseInput', () => {
 
     it('handles empty string modelValue', () => {
       const wrapper = mount(BaseInput, {
-        props: { modelValue: '' }
+        props: { modelValue: '' },
       })
 
       expect(wrapper.find('input').element.value).toBe('')
@@ -304,7 +304,7 @@ describe('BaseInput', () => {
 
     it('handles number modelValue of 0', () => {
       const wrapper = mount(BaseInput, {
-        props: { modelValue: 0, type: 'number' }
+        props: { modelValue: 0, type: 'number' },
       })
 
       expect(wrapper.find('input').element.value).toBe('0')

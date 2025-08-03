@@ -14,8 +14,8 @@
         {
           'base-alert--dismissible': dismissible,
           'base-alert--bordered': bordered,
-          'base-alert--filled': filled
-        }
+          'base-alert--filled': filled,
+        },
       ]"
       role="alert"
     >
@@ -61,9 +61,10 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import type { AlertVariant } from './index'
 
 interface Props {
-  variant?: 'default' | 'success' | 'warning' | 'danger' | 'info'
+  variant?: AlertVariant
   title?: string
   message?: string
   dismissible?: boolean
@@ -87,7 +88,7 @@ const props = withDefaults(defineProps<Props>(), {
   filled: false,
   showIcon: true,
   modelValue: true,
-  autoClose: 0
+  autoClose: 0,
 })
 
 const emit = defineEmits<Emits>()
@@ -95,9 +96,12 @@ const emit = defineEmits<Emits>()
 const visible = ref(props.modelValue)
 
 // Watch for external changes to modelValue
-watch(() => props.modelValue, (newValue) => {
-  visible.value = newValue
-})
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    visible.value = newValue
+  },
+)
 
 // Watch for changes to visible and emit updates
 watch(visible, (newValue) => {

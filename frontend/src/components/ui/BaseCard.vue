@@ -7,8 +7,8 @@
         'base-card--hoverable': hoverable,
         'base-card--clickable': clickable,
         'base-card--bordered': bordered,
-        'base-card--shadow': shadow
-      }
+        'base-card--shadow': shadow,
+      },
     ]"
     @click="handleClick"
   >
@@ -39,10 +39,12 @@
 </template>
 
 <script setup lang="ts">
+import type { CardVariant } from './index'
+
 interface Props {
   title?: string
   subtitle?: string
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
+  variant?: CardVariant
   hoverable?: boolean
   clickable?: boolean
   bordered?: boolean
@@ -58,7 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
   hoverable: false,
   clickable: false,
   bordered: true,
-  shadow: true
+  shadow: true,
 })
 
 const emit = defineEmits<Emits>()
@@ -83,12 +85,16 @@ const handleClick = (event: MouseEvent) => {
 }
 
 .base-card--shadow {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .base-card--hoverable:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .base-card--clickable {
@@ -97,7 +103,9 @@ const handleClick = (event: MouseEvent) => {
 
 .base-card--clickable:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Variants */

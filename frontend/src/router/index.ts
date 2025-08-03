@@ -7,18 +7,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/employees'
+      redirect: '/employees',
     },
     {
       path: '/employees',
       name: 'employees',
-      component: EmployeesPage
+      component: EmployeesPage,
     },
     {
       path: '/statistics',
       name: 'statistics',
-      component: StatisticsPage
-    }
+      component: StatisticsPage,
+    },
   ],
 })
 

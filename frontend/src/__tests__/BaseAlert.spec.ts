@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import BaseAlert from '../components/ui/BaseAlert.vue'
+import BaseAlert from '@/components/ui/BaseAlert.vue'
+import type { AlertVariant } from '@/components/ui'
 
 describe('BaseAlert', () => {
   beforeEach(() => {
@@ -25,7 +26,7 @@ describe('BaseAlert', () => {
 
     it('renders title when provided', () => {
       const wrapper = mount(BaseAlert, {
-        props: { title: 'Alert Title' }
+        props: { title: 'Alert Title' },
       })
 
       expect(wrapper.find('.base-alert__title').exists()).toBe(true)
@@ -34,7 +35,7 @@ describe('BaseAlert', () => {
 
     it('renders message when provided', () => {
       const wrapper = mount(BaseAlert, {
-        props: { message: 'Alert message content' }
+        props: { message: 'Alert message content' },
       })
 
       expect(wrapper.find('.base-alert__text').exists()).toBe(true)
@@ -45,17 +46,19 @@ describe('BaseAlert', () => {
       const wrapper = mount(BaseAlert, {
         props: { message: 'Alert message content' },
         slots: {
-          default: '<strong>Custom slot content</strong>'
-        }
+          default: '<strong>Custom slot content</strong>',
+        },
       })
 
-      expect(wrapper.find('.base-alert__text').html()).toContain('<strong>Custom slot content</strong>')
+      expect(wrapper.find('.base-alert__text').html()).toContain(
+        '<strong>Custom slot content</strong>',
+      )
       expect(wrapper.find('.base-alert__text').text()).not.toBe('Alert message content')
     })
 
     it('does not render when modelValue is false', () => {
       const wrapper = mount(BaseAlert, {
-        props: { modelValue: false }
+        props: { modelValue: false },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(false)
@@ -63,12 +66,12 @@ describe('BaseAlert', () => {
   })
 
   describe('Props - Variant', () => {
-    const variants = ['default', 'success', 'warning', 'danger', 'info']
+    const variants: AlertVariant[] = ['default', 'success', 'warning', 'danger', 'info']
 
-    variants.forEach(variant => {
+    variants.forEach((variant) => {
       it(`applies correct class for ${variant} variant`, () => {
         const wrapper = mount(BaseAlert, {
-          props: { variant: variant as any }
+          props: { variant },
         })
 
         expect(wrapper.find('.base-alert').classes()).toContain(`base-alert--${variant}`)
@@ -79,7 +82,7 @@ describe('BaseAlert', () => {
   describe('Props - Style Options', () => {
     it('applies dismissible class when dismissible prop is true', () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: true }
+        props: { dismissible: true },
       })
 
       expect(wrapper.find('.base-alert').classes()).toContain('base-alert--dismissible')
@@ -88,7 +91,7 @@ describe('BaseAlert', () => {
 
     it('does not show dismiss button when dismissible is false', () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: false }
+        props: { dismissible: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-alert--dismissible')
@@ -97,7 +100,7 @@ describe('BaseAlert', () => {
 
     it('applies bordered class when bordered prop is true', () => {
       const wrapper = mount(BaseAlert, {
-        props: { bordered: true }
+        props: { bordered: true },
       })
 
       expect(wrapper.find('.base-alert').classes()).toContain('base-alert--bordered')
@@ -105,7 +108,7 @@ describe('BaseAlert', () => {
 
     it('does not apply bordered class when bordered prop is false', () => {
       const wrapper = mount(BaseAlert, {
-        props: { bordered: false }
+        props: { bordered: false },
       })
 
       expect(wrapper.find('.base-alert').classes()).not.toContain('base-alert--bordered')
@@ -113,7 +116,7 @@ describe('BaseAlert', () => {
 
     it('applies filled class when filled prop is true', () => {
       const wrapper = mount(BaseAlert, {
-        props: { filled: true }
+        props: { filled: true },
       })
 
       expect(wrapper.find('.base-alert').classes()).toContain('base-alert--filled')
@@ -121,7 +124,7 @@ describe('BaseAlert', () => {
 
     it('does not apply filled class when filled prop is false', () => {
       const wrapper = mount(BaseAlert, {
-        props: { filled: false }
+        props: { filled: false },
       })
 
       expect(wrapper.find('.base-alert').classes()).not.toContain('base-alert--filled')
@@ -131,7 +134,7 @@ describe('BaseAlert', () => {
   describe('Props - Icon Display', () => {
     it('shows icon when showIcon prop is true', () => {
       const wrapper = mount(BaseAlert, {
-        props: { showIcon: true }
+        props: { showIcon: true },
       })
 
       expect(wrapper.find('.base-alert__icon').exists()).toBe(true)
@@ -139,7 +142,7 @@ describe('BaseAlert', () => {
 
     it('does not show icon when showIcon prop is false', () => {
       const wrapper = mount(BaseAlert, {
-        props: { showIcon: false }
+        props: { showIcon: false },
       })
 
       expect(wrapper.find('.base-alert__icon').exists()).toBe(false)
@@ -147,7 +150,7 @@ describe('BaseAlert', () => {
 
     it('shows correct default icon for success variant', () => {
       const wrapper = mount(BaseAlert, {
-        props: { variant: 'success', showIcon: true }
+        props: { variant: 'success', showIcon: true },
       })
 
       expect(wrapper.find('.base-alert__icon').text()).toBe('✓')
@@ -155,7 +158,7 @@ describe('BaseAlert', () => {
 
     it('shows correct default icon for warning variant', () => {
       const wrapper = mount(BaseAlert, {
-        props: { variant: 'warning', showIcon: true }
+        props: { variant: 'warning', showIcon: true },
       })
 
       expect(wrapper.find('.base-alert__icon').text()).toBe('⚠')
@@ -163,7 +166,7 @@ describe('BaseAlert', () => {
 
     it('shows correct default icon for danger variant', () => {
       const wrapper = mount(BaseAlert, {
-        props: { variant: 'danger', showIcon: true }
+        props: { variant: 'danger', showIcon: true },
       })
 
       expect(wrapper.find('.base-alert__icon').text()).toBe('✕')
@@ -171,7 +174,7 @@ describe('BaseAlert', () => {
 
     it('shows correct default icon for info variant', () => {
       const wrapper = mount(BaseAlert, {
-        props: { variant: 'info', showIcon: true }
+        props: { variant: 'info', showIcon: true },
       })
 
       expect(wrapper.find('.base-alert__icon').text()).toBe('ℹ')
@@ -179,7 +182,7 @@ describe('BaseAlert', () => {
 
     it('shows correct default icon for default variant', () => {
       const wrapper = mount(BaseAlert, {
-        props: { variant: 'default', showIcon: true }
+        props: { variant: 'default', showIcon: true },
       })
 
       expect(wrapper.find('.base-alert__icon').text()).toBe('•')
@@ -189,8 +192,8 @@ describe('BaseAlert', () => {
       const wrapper = mount(BaseAlert, {
         props: { showIcon: true },
         slots: {
-          icon: '<i class="custom-icon">🔥</i>'
-        }
+          icon: '<i class="custom-icon">🔥</i>',
+        },
       })
 
       expect(wrapper.find('.base-alert__icon').html()).toContain('<i class="custom-icon">🔥</i>')
@@ -201,12 +204,14 @@ describe('BaseAlert', () => {
     it('renders actions slot when provided', () => {
       const wrapper = mount(BaseAlert, {
         slots: {
-          actions: '<button class="custom-action">Action</button>'
-        }
+          actions: '<button class="custom-action">Action</button>',
+        },
       })
 
       expect(wrapper.find('.base-alert__actions').exists()).toBe(true)
-      expect(wrapper.find('.base-alert__actions').html()).toContain('<button class="custom-action">Action</button>')
+      expect(wrapper.find('.base-alert__actions').html()).toContain(
+        '<button class="custom-action">Action</button>',
+      )
     })
 
     it('does not render actions section when no actions slot provided', () => {
@@ -219,7 +224,7 @@ describe('BaseAlert', () => {
   describe('Visibility and ModelValue', () => {
     it('shows alert when modelValue is true', () => {
       const wrapper = mount(BaseAlert, {
-        props: { modelValue: true }
+        props: { modelValue: true },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(true)
@@ -227,7 +232,7 @@ describe('BaseAlert', () => {
 
     it('hides alert when modelValue is false', () => {
       const wrapper = mount(BaseAlert, {
-        props: { modelValue: false }
+        props: { modelValue: false },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(false)
@@ -235,7 +240,7 @@ describe('BaseAlert', () => {
 
     it('updates visibility when modelValue prop changes', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { modelValue: true }
+        props: { modelValue: true },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(true)
@@ -248,7 +253,7 @@ describe('BaseAlert', () => {
 
     it('emits update:modelValue when visibility changes', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { modelValue: true, dismissible: true }
+        props: { modelValue: true, dismissible: true },
       })
 
       await wrapper.find('.base-alert__dismiss').trigger('click')
@@ -261,7 +266,7 @@ describe('BaseAlert', () => {
   describe('Dismiss Functionality', () => {
     it('emits dismiss event when dismiss button is clicked', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: true }
+        props: { dismissible: true },
       })
 
       await wrapper.find('.base-alert__dismiss').trigger('click')
@@ -272,7 +277,7 @@ describe('BaseAlert', () => {
 
     it('emits close event when alert is dismissed', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: true }
+        props: { dismissible: true },
       })
 
       await wrapper.find('.base-alert__dismiss').trigger('click')
@@ -284,7 +289,7 @@ describe('BaseAlert', () => {
 
     it('hides alert when dismiss button is clicked', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: true }
+        props: { dismissible: true },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(true)
@@ -299,7 +304,7 @@ describe('BaseAlert', () => {
   describe('Auto Close Functionality', () => {
     it('auto closes after specified time', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { autoClose: 1000 }
+        props: { autoClose: 1000 },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(true)
@@ -314,7 +319,7 @@ describe('BaseAlert', () => {
 
     it('does not auto close when autoClose is 0', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { autoClose: 0 }
+        props: { autoClose: 0 },
       })
 
       expect(wrapper.find('.base-alert').exists()).toBe(true)
@@ -329,7 +334,7 @@ describe('BaseAlert', () => {
 
     it('emits dismiss and close events when auto closing', async () => {
       const wrapper = mount(BaseAlert, {
-        props: { autoClose: 500 }
+        props: { autoClose: 500 },
       })
 
       vi.advanceTimersByTime(500)
@@ -349,7 +354,7 @@ describe('BaseAlert', () => {
 
     it('dismiss button has proper aria-label', () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: true }
+        props: { dismissible: true },
       })
 
       expect(wrapper.find('.base-alert__dismiss').attributes('aria-label')).toBe('Dismiss alert')
@@ -357,7 +362,7 @@ describe('BaseAlert', () => {
 
     it('dismiss button has proper type attribute', () => {
       const wrapper = mount(BaseAlert, {
-        props: { dismissible: true }
+        props: { dismissible: true },
       })
 
       expect(wrapper.find('.base-alert__dismiss').attributes('type')).toBe('button')
@@ -375,8 +380,8 @@ describe('BaseAlert', () => {
           bordered: true,
           filled: true,
           showIcon: true,
-          modelValue: true
-        }
+          modelValue: true,
+        },
       })
 
       expect(wrapper.find('.base-alert').classes()).toContain('base-alert--success')
@@ -391,7 +396,7 @@ describe('BaseAlert', () => {
 
     it('handles alert without title', () => {
       const wrapper = mount(BaseAlert, {
-        props: { message: 'Just a message' }
+        props: { message: 'Just a message' },
       })
 
       expect(wrapper.find('.base-alert__title').exists()).toBe(false)
@@ -400,7 +405,7 @@ describe('BaseAlert', () => {
 
     it('handles alert without message or slot content', () => {
       const wrapper = mount(BaseAlert, {
-        props: { title: 'Just a title' }
+        props: { title: 'Just a title' },
       })
 
       expect(wrapper.find('.base-alert__title').text()).toBe('Just a title')
@@ -413,8 +418,8 @@ describe('BaseAlert', () => {
         props: {
           bordered: false,
           filled: true,
-          dismissible: true
-        }
+          dismissible: true,
+        },
       })
 
       expect(wrapper.find('.base-alert').classes()).not.toContain('base-alert--bordered')

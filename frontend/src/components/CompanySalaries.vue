@@ -2,7 +2,7 @@
   <div class="company-salaries">
     <h2>Company Salary Statistics</h2>
 
-    <BaseLoading v-if="isLoading" text="Loading salary data..."/>
+    <BaseLoading v-if="isLoading" text="Loading salary data..." />
 
     <BaseAlert
       v-else-if="error"
@@ -36,9 +36,7 @@
             {{ value }}
           </template>
 
-          <template #cell-average_salary="{ value }">
-            ${{ value.toLocaleString() }}
-          </template>
+          <template #cell-average_salary="{ value }"> ${{ value.toLocaleString() }} </template>
         </BaseTable>
       </div>
     </div>
@@ -46,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
-import {BaseAlert, BaseLoading, BaseTable} from '@/components/ui'
+import { onMounted, ref } from 'vue'
+import { BaseAlert, BaseLoading, BaseTable } from '@/components/ui'
 
 interface CompanySalaryData {
   company_name: string
@@ -56,8 +54,8 @@ interface CompanySalaryData {
 
 // Table columns configuration
 const tableColumns = [
-  {key: 'company_name', label: 'Company', sortable: true},
-  {key: 'average_salary', label: 'Average Salary', sortable: true, align: 'right' as const},
+  { key: 'company_name', label: 'Company', sortable: true },
+  { key: 'average_salary', label: 'Average Salary', sortable: true, align: 'right' as const },
 ]
 
 const salaryData = ref<CompanySalaryData[]>([])

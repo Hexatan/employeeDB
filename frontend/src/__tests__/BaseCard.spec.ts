@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import BaseCard from '../components/ui/BaseCard.vue'
+import BaseCard from '@/components/ui/BaseCard.vue'
+import type { CardVariant } from '@/components/ui'
 
 describe('BaseCard', () => {
   describe('Rendering', () => {
@@ -16,7 +17,7 @@ describe('BaseCard', () => {
 
     it('renders title when provided', () => {
       const wrapper = mount(BaseCard, {
-        props: { title: 'Card Title' }
+        props: { title: 'Card Title' },
       })
 
       expect(wrapper.find('.base-card__header').exists()).toBe(true)
@@ -26,7 +27,7 @@ describe('BaseCard', () => {
 
     it('renders subtitle when provided', () => {
       const wrapper = mount(BaseCard, {
-        props: { subtitle: 'Card Subtitle' }
+        props: { subtitle: 'Card Subtitle' },
       })
 
       expect(wrapper.find('.base-card__header').exists()).toBe(true)
@@ -38,8 +39,8 @@ describe('BaseCard', () => {
       const wrapper = mount(BaseCard, {
         props: {
           title: 'Card Title',
-          subtitle: 'Card Subtitle'
-        }
+          subtitle: 'Card Subtitle',
+        },
       })
 
       expect(wrapper.find('.base-card__title').text()).toBe('Card Title')
@@ -66,12 +67,12 @@ describe('BaseCard', () => {
   })
 
   describe('Props - Variant', () => {
-    const variants = ['default', 'primary', 'success', 'warning', 'danger', 'info']
+    const variants: CardVariant[] = ['default', 'primary', 'success', 'warning', 'danger', 'info']
 
-    variants.forEach(variant => {
+    variants.forEach((variant) => {
       it(`applies correct class for ${variant} variant`, () => {
         const wrapper = mount(BaseCard, {
-          props: { variant: variant as any }
+          props: { variant },
         })
 
         expect(wrapper.classes()).toContain(`base-card--${variant}`)
@@ -82,7 +83,7 @@ describe('BaseCard', () => {
   describe('Props - Interactive States', () => {
     it('applies hoverable class when hoverable prop is true', () => {
       const wrapper = mount(BaseCard, {
-        props: { hoverable: true }
+        props: { hoverable: true },
       })
 
       expect(wrapper.classes()).toContain('base-card--hoverable')
@@ -90,7 +91,7 @@ describe('BaseCard', () => {
 
     it('does not apply hoverable class when hoverable prop is false', () => {
       const wrapper = mount(BaseCard, {
-        props: { hoverable: false }
+        props: { hoverable: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-card--hoverable')
@@ -98,7 +99,7 @@ describe('BaseCard', () => {
 
     it('applies clickable class when clickable prop is true', () => {
       const wrapper = mount(BaseCard, {
-        props: { clickable: true }
+        props: { clickable: true },
       })
 
       expect(wrapper.classes()).toContain('base-card--clickable')
@@ -106,7 +107,7 @@ describe('BaseCard', () => {
 
     it('does not apply clickable class when clickable prop is false', () => {
       const wrapper = mount(BaseCard, {
-        props: { clickable: false }
+        props: { clickable: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-card--clickable')
@@ -116,7 +117,7 @@ describe('BaseCard', () => {
   describe('Props - Style Options', () => {
     it('applies bordered class when bordered prop is true', () => {
       const wrapper = mount(BaseCard, {
-        props: { bordered: true }
+        props: { bordered: true },
       })
 
       expect(wrapper.classes()).toContain('base-card--bordered')
@@ -124,7 +125,7 @@ describe('BaseCard', () => {
 
     it('does not apply bordered class when bordered prop is false', () => {
       const wrapper = mount(BaseCard, {
-        props: { bordered: false }
+        props: { bordered: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-card--bordered')
@@ -132,7 +133,7 @@ describe('BaseCard', () => {
 
     it('applies shadow class when shadow prop is true', () => {
       const wrapper = mount(BaseCard, {
-        props: { shadow: true }
+        props: { shadow: true },
       })
 
       expect(wrapper.classes()).toContain('base-card--shadow')
@@ -140,7 +141,7 @@ describe('BaseCard', () => {
 
     it('does not apply shadow class when shadow prop is false', () => {
       const wrapper = mount(BaseCard, {
-        props: { shadow: false }
+        props: { shadow: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-card--shadow')
@@ -151,8 +152,8 @@ describe('BaseCard', () => {
     it('renders default slot content in body', () => {
       const wrapper = mount(BaseCard, {
         slots: {
-          default: '<p>Card body content</p>'
-        }
+          default: '<p>Card body content</p>',
+        },
       })
 
       expect(wrapper.find('.base-card__body').exists()).toBe(true)
@@ -162,35 +163,41 @@ describe('BaseCard', () => {
     it('renders custom header slot content', () => {
       const wrapper = mount(BaseCard, {
         slots: {
-          header: '<div class="custom-header">Custom Header</div>'
-        }
+          header: '<div class="custom-header">Custom Header</div>',
+        },
       })
 
       expect(wrapper.find('.base-card__header').exists()).toBe(true)
-      expect(wrapper.find('.base-card__header').html()).toContain('<div class="custom-header">Custom Header</div>')
+      expect(wrapper.find('.base-card__header').html()).toContain(
+        '<div class="custom-header">Custom Header</div>',
+      )
     })
 
     it('renders actions slot content', () => {
       const wrapper = mount(BaseCard, {
         props: { title: 'Card Title' },
         slots: {
-          actions: '<button class="custom-action">Action</button>'
-        }
+          actions: '<button class="custom-action">Action</button>',
+        },
       })
 
       expect(wrapper.find('.base-card__actions').exists()).toBe(true)
-      expect(wrapper.find('.base-card__actions').html()).toContain('<button class="custom-action">Action</button>')
+      expect(wrapper.find('.base-card__actions').html()).toContain(
+        '<button class="custom-action">Action</button>',
+      )
     })
 
     it('renders footer slot content', () => {
       const wrapper = mount(BaseCard, {
         slots: {
-          footer: '<div class="custom-footer">Footer content</div>'
-        }
+          footer: '<div class="custom-footer">Footer content</div>',
+        },
       })
 
       expect(wrapper.find('.base-card__footer').exists()).toBe(true)
-      expect(wrapper.find('.base-card__footer').html()).toContain('<div class="custom-footer">Footer content</div>')
+      expect(wrapper.find('.base-card__footer').html()).toContain(
+        '<div class="custom-footer">Footer content</div>',
+      )
     })
 
     it('does not render actions section when no actions slot and no header', () => {
@@ -203,8 +210,8 @@ describe('BaseCard', () => {
       const wrapper = mount(BaseCard, {
         props: { title: 'Title' },
         slots: {
-          actions: '<button>Action</button>'
-        }
+          actions: '<button>Action</button>',
+        },
       })
 
       expect(wrapper.find('.base-card__actions').exists()).toBe(true)
@@ -214,11 +221,11 @@ describe('BaseCard', () => {
       const wrapper = mount(BaseCard, {
         props: {
           title: 'Prop Title',
-          subtitle: 'Prop Subtitle'
+          subtitle: 'Prop Subtitle',
         },
         slots: {
-          header: '<div class="custom-header">Custom Header</div>'
-        }
+          header: '<div class="custom-header">Custom Header</div>',
+        },
       })
 
       expect(wrapper.find('.custom-header').exists()).toBe(true)
@@ -230,7 +237,7 @@ describe('BaseCard', () => {
   describe('Click Handling', () => {
     it('emits click event when card is clicked and clickable is true', async () => {
       const wrapper = mount(BaseCard, {
-        props: { clickable: true }
+        props: { clickable: true },
       })
 
       await wrapper.trigger('click')
@@ -242,7 +249,7 @@ describe('BaseCard', () => {
 
     it('does not emit click event when card is clicked and clickable is false', async () => {
       const wrapper = mount(BaseCard, {
-        props: { clickable: false }
+        props: { clickable: false },
       })
 
       await wrapper.trigger('click')
@@ -260,7 +267,7 @@ describe('BaseCard', () => {
 
     it('handles click event with proper MouseEvent', async () => {
       const wrapper = mount(BaseCard, {
-        props: { clickable: true }
+        props: { clickable: true },
       })
 
       await wrapper.trigger('click')
@@ -280,8 +287,8 @@ describe('BaseCard', () => {
           hoverable: true,
           clickable: true,
           bordered: true,
-          shadow: true
-        }
+          shadow: true,
+        },
       })
 
       expect(wrapper.classes()).toContain('base-card--primary')
@@ -299,8 +306,8 @@ describe('BaseCard', () => {
           header: '<div class="custom-header">Header</div>',
           default: '<div class="custom-body">Body</div>',
           footer: '<div class="custom-footer">Footer</div>',
-          actions: '<button class="custom-action">Action</button>'
-        }
+          actions: '<button class="custom-action">Action</button>',
+        },
       })
 
       expect(wrapper.find('.base-card__header').exists()).toBe(true)
@@ -315,8 +322,8 @@ describe('BaseCard', () => {
           bordered: false,
           shadow: false,
           hoverable: false,
-          clickable: false
-        }
+          clickable: false,
+        },
       })
 
       expect(wrapper.classes()).not.toContain('base-card--bordered')
@@ -329,8 +336,8 @@ describe('BaseCard', () => {
       const wrapper = mount(BaseCard, {
         props: {
           title: '',
-          subtitle: ''
-        }
+          subtitle: '',
+        },
       })
 
       // Empty strings are falsy, so elements should not render
@@ -343,8 +350,8 @@ describe('BaseCard', () => {
       const wrapper = mount(BaseCard, {
         props: {
           hoverable: true,
-          clickable: true
-        }
+          clickable: true,
+        },
       })
 
       expect(wrapper.classes()).toContain('base-card--hoverable')
@@ -356,8 +363,8 @@ describe('BaseCard', () => {
         props: {
           variant: 'success',
           hoverable: true,
-          clickable: true
-        }
+          clickable: true,
+        },
       })
 
       expect(wrapper.classes()).toContain('base-card--success')
@@ -369,7 +376,7 @@ describe('BaseCard', () => {
   describe('Accessibility and Semantics', () => {
     it('uses proper heading tag for title', () => {
       const wrapper = mount(BaseCard, {
-        props: { title: 'Card Title' }
+        props: { title: 'Card Title' },
       })
 
       const titleElement = wrapper.find('.base-card__title')
@@ -378,7 +385,7 @@ describe('BaseCard', () => {
 
     it('uses proper paragraph tag for subtitle', () => {
       const wrapper = mount(BaseCard, {
-        props: { subtitle: 'Card Subtitle' }
+        props: { subtitle: 'Card Subtitle' },
       })
 
       const subtitleElement = wrapper.find('.base-card__subtitle')
@@ -390,8 +397,8 @@ describe('BaseCard', () => {
         props: { title: 'Title' },
         slots: {
           default: 'Body content',
-          footer: 'Footer content'
-        }
+          footer: 'Footer content',
+        },
       })
 
       const card = wrapper.find('.base-card')

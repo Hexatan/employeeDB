@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import BaseLoading from '../components/ui/BaseLoading.vue'
+import BaseLoading from '@/components/ui/BaseLoading.vue'
+import type { LoadingVariant, ComponentSize, SpinnerType } from '@/components/ui'
 
 describe('BaseLoading', () => {
   describe('Rendering', () => {
@@ -16,7 +17,7 @@ describe('BaseLoading', () => {
 
     it('renders loading text when provided', () => {
       const wrapper = mount(BaseLoading, {
-        props: { text: 'Loading...' }
+        props: { text: 'Loading...' },
       })
 
       expect(wrapper.find('.base-loading__text').exists()).toBe(true)
@@ -32,12 +33,14 @@ describe('BaseLoading', () => {
     it('renders custom slot content', () => {
       const wrapper = mount(BaseLoading, {
         slots: {
-          default: '<div class="custom-content">Custom loading content</div>'
-        }
+          default: '<div class="custom-content">Custom loading content</div>',
+        },
       })
 
       expect(wrapper.find('.base-loading__custom').exists()).toBe(true)
-      expect(wrapper.find('.base-loading__custom').html()).toContain('<div class="custom-content">Custom loading content</div>')
+      expect(wrapper.find('.base-loading__custom').html()).toContain(
+        '<div class="custom-content">Custom loading content</div>',
+      )
     })
 
     it('does not render custom content section when no slot provided', () => {
@@ -48,12 +51,12 @@ describe('BaseLoading', () => {
   })
 
   describe('Props - Variant', () => {
-    const variants = ['light', 'dark', 'primary']
+    const variants: LoadingVariant[] = ['light', 'dark', 'primary']
 
-    variants.forEach(variant => {
+    variants.forEach((variant) => {
       it(`applies correct class for ${variant} variant`, () => {
         const wrapper = mount(BaseLoading, {
-          props: { variant: variant as any }
+          props: { variant },
         })
 
         expect(wrapper.classes()).toContain(`base-loading--${variant}`)
@@ -62,15 +65,17 @@ describe('BaseLoading', () => {
   })
 
   describe('Props - Size', () => {
-    const sizes = ['small', 'medium', 'large']
+    const sizes: ComponentSize[] = ['small', 'medium', 'large']
 
-    sizes.forEach(size => {
+    sizes.forEach((size) => {
       it(`applies correct class for ${size} size`, () => {
         const wrapper = mount(BaseLoading, {
-          props: { size: size as any }
+          props: { size },
         })
 
-        expect(wrapper.find('.base-loading__spinner').classes()).toContain(`base-loading__spinner--${size}`)
+        expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+          `base-loading__spinner--${size}`,
+        )
       })
     })
   })
@@ -79,7 +84,9 @@ describe('BaseLoading', () => {
     it('renders circle spinner by default', () => {
       const wrapper = mount(BaseLoading)
 
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--circle')
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--circle',
+      )
       expect(wrapper.find('.base-loading__circle').exists()).toBe(true)
       expect(wrapper.find('.base-loading__dots').exists()).toBe(false)
       expect(wrapper.find('.base-loading__pulse').exists()).toBe(false)
@@ -87,10 +94,12 @@ describe('BaseLoading', () => {
 
     it('renders circle spinner when spinnerType is circle', () => {
       const wrapper = mount(BaseLoading, {
-        props: { spinnerType: 'circle' }
+        props: { spinnerType: 'circle' },
       })
 
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--circle')
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--circle',
+      )
       expect(wrapper.find('.base-loading__circle').exists()).toBe(true)
       expect(wrapper.find('.base-loading__dots').exists()).toBe(false)
       expect(wrapper.find('.base-loading__pulse').exists()).toBe(false)
@@ -98,10 +107,12 @@ describe('BaseLoading', () => {
 
     it('renders dots spinner when spinnerType is dots', () => {
       const wrapper = mount(BaseLoading, {
-        props: { spinnerType: 'dots' }
+        props: { spinnerType: 'dots' },
       })
 
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--dots')
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--dots',
+      )
       expect(wrapper.find('.base-loading__dots').exists()).toBe(true)
       expect(wrapper.find('.base-loading__circle').exists()).toBe(false)
       expect(wrapper.find('.base-loading__pulse').exists()).toBe(false)
@@ -109,10 +120,12 @@ describe('BaseLoading', () => {
 
     it('renders pulse spinner when spinnerType is pulse', () => {
       const wrapper = mount(BaseLoading, {
-        props: { spinnerType: 'pulse' }
+        props: { spinnerType: 'pulse' },
       })
 
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--pulse')
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--pulse',
+      )
       expect(wrapper.find('.base-loading__pulse').exists()).toBe(true)
       expect(wrapper.find('.base-loading__circle').exists()).toBe(false)
       expect(wrapper.find('.base-loading__dots').exists()).toBe(false)
@@ -120,7 +133,7 @@ describe('BaseLoading', () => {
 
     it('renders three dots for dots spinner', () => {
       const wrapper = mount(BaseLoading, {
-        props: { spinnerType: 'dots' }
+        props: { spinnerType: 'dots' },
       })
 
       const dots = wrapper.findAll('.base-loading__dot')
@@ -131,7 +144,7 @@ describe('BaseLoading', () => {
   describe('Props - Display Modes', () => {
     it('applies overlay class when overlay prop is true', () => {
       const wrapper = mount(BaseLoading, {
-        props: { overlay: true }
+        props: { overlay: true },
       })
 
       expect(wrapper.classes()).toContain('base-loading--overlay')
@@ -139,7 +152,7 @@ describe('BaseLoading', () => {
 
     it('does not apply overlay class when overlay prop is false', () => {
       const wrapper = mount(BaseLoading, {
-        props: { overlay: false }
+        props: { overlay: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-loading--overlay')
@@ -147,7 +160,7 @@ describe('BaseLoading', () => {
 
     it('applies fullscreen class when fullscreen prop is true', () => {
       const wrapper = mount(BaseLoading, {
-        props: { fullscreen: true }
+        props: { fullscreen: true },
       })
 
       expect(wrapper.classes()).toContain('base-loading--fullscreen')
@@ -155,7 +168,7 @@ describe('BaseLoading', () => {
 
     it('does not apply fullscreen class when fullscreen prop is false', () => {
       const wrapper = mount(BaseLoading, {
-        props: { fullscreen: false }
+        props: { fullscreen: false },
       })
 
       expect(wrapper.classes()).not.toContain('base-loading--fullscreen')
@@ -165,8 +178,8 @@ describe('BaseLoading', () => {
       const wrapper = mount(BaseLoading, {
         props: {
           overlay: true,
-          fullscreen: true
-        }
+          fullscreen: true,
+        },
       })
 
       expect(wrapper.classes()).toContain('base-loading--overlay')
@@ -183,15 +196,19 @@ describe('BaseLoading', () => {
           spinnerType: 'dots',
           text: 'Please wait...',
           overlay: true,
-          fullscreen: false
-        }
+          fullscreen: false,
+        },
       })
 
       expect(wrapper.classes()).toContain('base-loading--dark')
       expect(wrapper.classes()).toContain('base-loading--overlay')
       expect(wrapper.classes()).not.toContain('base-loading--fullscreen')
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--large')
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--dots')
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--large',
+      )
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--dots',
+      )
       expect(wrapper.find('.base-loading__dots').exists()).toBe(true)
       expect(wrapper.find('.base-loading__text').text()).toBe('Please wait...')
     })
@@ -200,18 +217,22 @@ describe('BaseLoading', () => {
       const wrapper = mount(BaseLoading, {
         props: {
           spinnerType: 'pulse',
-          size: 'small'
-        }
+          size: 'small',
+        },
       })
 
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--small')
-      expect(wrapper.find('.base-loading__spinner').classes()).toContain('base-loading__spinner--pulse')
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--small',
+      )
+      expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+        'base-loading__spinner--pulse',
+      )
       expect(wrapper.find('.base-loading__pulse').exists()).toBe(true)
     })
 
     it('handles empty text string', () => {
       const wrapper = mount(BaseLoading, {
-        props: { text: '' }
+        props: { text: '' },
       })
 
       // Empty string is falsy, so text element should not render
@@ -222,50 +243,58 @@ describe('BaseLoading', () => {
       const wrapper = mount(BaseLoading, {
         props: { text: 'Loading data...' },
         slots: {
-          default: '<div class="progress-bar">50%</div>'
-        }
+          default: '<div class="progress-bar">50%</div>',
+        },
       })
 
       expect(wrapper.find('.base-loading__text').exists()).toBe(true)
       expect(wrapper.find('.base-loading__text').text()).toBe('Loading data...')
       expect(wrapper.find('.base-loading__custom').exists()).toBe(true)
-      expect(wrapper.find('.base-loading__custom').html()).toContain('<div class="progress-bar">50%</div>')
+      expect(wrapper.find('.base-loading__custom').html()).toContain(
+        '<div class="progress-bar">50%</div>',
+      )
     })
 
     it('handles all spinner types with all variants', () => {
-      const spinnerTypes = ['circle', 'dots', 'pulse']
-      const variants = ['light', 'dark', 'primary']
+      const spinnerTypes: SpinnerType[] = ['circle', 'dots', 'pulse']
+      const variants: LoadingVariant[] = ['light', 'dark', 'primary']
 
-      spinnerTypes.forEach(spinnerType => {
-        variants.forEach(variant => {
+      spinnerTypes.forEach((spinnerType) => {
+        variants.forEach((variant) => {
           const wrapper = mount(BaseLoading, {
             props: {
-              spinnerType: spinnerType as any,
-              variant: variant as any
-            }
+              spinnerType,
+              variant,
+            },
           })
 
           expect(wrapper.classes()).toContain(`base-loading--${variant}`)
-          expect(wrapper.find('.base-loading__spinner').classes()).toContain(`base-loading__spinner--${spinnerType}`)
+          expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+            `base-loading__spinner--${spinnerType}`,
+          )
         })
       })
     })
 
     it('handles all sizes with all spinner types', () => {
-      const sizes = ['small', 'medium', 'large']
-      const spinnerTypes = ['circle', 'dots', 'pulse']
+      const sizes: ComponentSize[] = ['small', 'medium', 'large']
+      const spinnerTypes: SpinnerType[] = ['circle', 'dots', 'pulse']
 
-      sizes.forEach(size => {
-        spinnerTypes.forEach(spinnerType => {
+      sizes.forEach((size) => {
+        spinnerTypes.forEach((spinnerType) => {
           const wrapper = mount(BaseLoading, {
             props: {
-              size: size as any,
-              spinnerType: spinnerType as any
-            }
+              size,
+              spinnerType,
+            },
           })
 
-          expect(wrapper.find('.base-loading__spinner').classes()).toContain(`base-loading__spinner--${size}`)
-          expect(wrapper.find('.base-loading__spinner').classes()).toContain(`base-loading__spinner--${spinnerType}`)
+          expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+            `base-loading__spinner--${size}`,
+          )
+          expect(wrapper.find('.base-loading__spinner').classes()).toContain(
+            `base-loading__spinner--${spinnerType}`,
+          )
         })
       })
     })
@@ -276,8 +305,8 @@ describe('BaseLoading', () => {
       const wrapper = mount(BaseLoading, {
         props: { text: 'Loading...' },
         slots: {
-          default: '<div>Custom content</div>'
-        }
+          default: '<div>Custom content</div>',
+        },
       })
 
       const content = wrapper.find('.base-loading__content')
@@ -312,7 +341,7 @@ describe('BaseLoading', () => {
 
     it('maintains proper structure with spinner and text only', () => {
       const wrapper = mount(BaseLoading, {
-        props: { text: 'Loading...' }
+        props: { text: 'Loading...' },
       })
 
       const content = wrapper.find('.base-loading__content')
@@ -330,8 +359,8 @@ describe('BaseLoading', () => {
     it('maintains proper structure with spinner and custom content only', () => {
       const wrapper = mount(BaseLoading, {
         slots: {
-          default: '<div>Custom content</div>'
-        }
+          default: '<div>Custom content</div>',
+        },
       })
 
       const content = wrapper.find('.base-loading__content')
@@ -350,7 +379,7 @@ describe('BaseLoading', () => {
   describe('Accessibility and Semantics', () => {
     it('provides proper loading indication structure', () => {
       const wrapper = mount(BaseLoading, {
-        props: { text: 'Loading data...' }
+        props: { text: 'Loading data...' },
       })
 
       expect(wrapper.find('.base-loading').exists()).toBe(true)
@@ -361,7 +390,7 @@ describe('BaseLoading', () => {
 
     it('maintains semantic structure for screen readers', () => {
       const wrapper = mount(BaseLoading, {
-        props: { text: 'Please wait while we load your data' }
+        props: { text: 'Please wait while we load your data' },
       })
 
       const text = wrapper.find('.base-loading__text')

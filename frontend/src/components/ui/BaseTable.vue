@@ -17,17 +17,14 @@
                   'base-table__th--sortable': column.sortable,
                   'base-table__th--sorted': sortBy === column.key,
                   'base-table__th--center': column.align === 'center',
-                  'base-table__th--right': column.align === 'right'
-                }
+                  'base-table__th--right': column.align === 'right',
+                },
               ]"
               @click="column.sortable ? handleSort(column.key) : null"
             >
               <div class="base-table__th-content">
                 {{ column.label }}
-                <span
-                  v-if="column.sortable && sortBy === column.key"
-                  class="base-table__sort-icon"
-                >
+                <span v-if="column.sortable && sortBy === column.key" class="base-table__sort-icon">
                   {{ sortOrder === 'asc' ? '↑' : '↓' }}
                 </span>
                 <span
@@ -48,8 +45,8 @@
               'base-table__tr',
               {
                 'base-table__tr--striped': striped && index % 2 === 1,
-                'base-table__tr--hoverable': hoverable
-              }
+                'base-table__tr--hoverable': hoverable,
+              },
             ]"
           >
             <td
@@ -59,8 +56,8 @@
                 'base-table__td',
                 {
                   'base-table__td--center': column.align === 'center',
-                  'base-table__td--right': column.align === 'right'
-                }
+                  'base-table__td--right': column.align === 'right',
+                },
               ]"
             >
               <slot
@@ -112,7 +109,7 @@ const props = withDefaults(defineProps<Props>(), {
   striped: true,
   hoverable: true,
   showFooter: false,
-  rowKey: 'id'
+  rowKey: 'id',
 })
 
 const sortBy = ref<string>('')
@@ -230,9 +227,7 @@ const formatCellValue = (value: any, column: TableColumn): string => {
   }
 }
 
-.base-table__th--sortable
-
-.base-table__th--center {
+.base-table__th--sortable .base-table__th--center {
   text-align: center;
 
   .base-table__th-content {

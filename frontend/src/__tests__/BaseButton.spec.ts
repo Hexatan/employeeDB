@@ -1,14 +1,15 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import BaseButton from '../components/ui/BaseButton.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import type { ButtonVariant, ComponentSize } from '@/components/ui'
 
 describe('BaseButton', () => {
   describe('Rendering', () => {
     it('renders properly with default props', () => {
       const wrapper = mount(BaseButton, {
         slots: {
-          default: 'Click me'
-        }
+          default: 'Click me',
+        },
       })
 
       expect(wrapper.find('button').exists()).toBe(true)
@@ -21,8 +22,8 @@ describe('BaseButton', () => {
     it('renders slot content correctly', () => {
       const wrapper = mount(BaseButton, {
         slots: {
-          default: '<span>Custom Content</span>'
-        }
+          default: '<span>Custom Content</span>',
+        },
       })
 
       expect(wrapper.html()).toContain('<span>Custom Content</span>')
@@ -30,13 +31,21 @@ describe('BaseButton', () => {
   })
 
   describe('Props - Variant', () => {
-    const variants = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'outline']
+    const variants: ButtonVariant[] = [
+      'primary',
+      'secondary',
+      'success',
+      'danger',
+      'warning',
+      'info',
+      'outline',
+    ]
 
-    variants.forEach(variant => {
+    variants.forEach((variant) => {
       it(`applies correct class for ${variant} variant`, () => {
         const wrapper = mount(BaseButton, {
-          props: { variant: variant as any },
-          slots: { default: 'Button' }
+          props: { variant },
+          slots: { default: 'Button' },
         })
 
         expect(wrapper.classes()).toContain(`base-button--${variant}`)
@@ -45,13 +54,13 @@ describe('BaseButton', () => {
   })
 
   describe('Props - Size', () => {
-    const sizes = ['small', 'medium', 'large']
+    const sizes: ComponentSize[] = ['small', 'medium', 'large']
 
-    sizes.forEach(size => {
+    sizes.forEach((size) => {
       it(`applies correct class for ${size} size`, () => {
         const wrapper = mount(BaseButton, {
-          props: { size: size as any },
-          slots: { default: 'Button' }
+          props: { size },
+          slots: { default: 'Button' },
         })
 
         expect(wrapper.classes()).toContain(`base-button--${size}`)
@@ -63,7 +72,7 @@ describe('BaseButton', () => {
     it('applies disabled class when disabled prop is true', () => {
       const wrapper = mount(BaseButton, {
         props: { disabled: true },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.classes()).toContain('base-button--disabled')
@@ -73,7 +82,7 @@ describe('BaseButton', () => {
     it('does not apply disabled class when disabled prop is false', () => {
       const wrapper = mount(BaseButton, {
         props: { disabled: false },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.classes()).not.toContain('base-button--disabled')
@@ -85,7 +94,7 @@ describe('BaseButton', () => {
     it('applies loading class and shows spinner when loading prop is true', () => {
       const wrapper = mount(BaseButton, {
         props: { loading: true },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.classes()).toContain('base-button--loading')
@@ -97,7 +106,7 @@ describe('BaseButton', () => {
     it('does not show spinner when loading prop is false', () => {
       const wrapper = mount(BaseButton, {
         props: { loading: false },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.classes()).not.toContain('base-button--loading')
@@ -109,7 +118,7 @@ describe('BaseButton', () => {
   describe('Event Handling', () => {
     it('emits click event when button is clicked', async () => {
       const wrapper = mount(BaseButton, {
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       await wrapper.find('button').trigger('click')
@@ -122,7 +131,7 @@ describe('BaseButton', () => {
     it('does not emit click event when button is disabled', async () => {
       const wrapper = mount(BaseButton, {
         props: { disabled: true },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       await wrapper.find('button').trigger('click')
@@ -133,7 +142,7 @@ describe('BaseButton', () => {
     it('does not emit click event when button is loading', async () => {
       const wrapper = mount(BaseButton, {
         props: { loading: true },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       await wrapper.find('button').trigger('click')
@@ -142,9 +151,8 @@ describe('BaseButton', () => {
     })
 
     it('handles click event with custom handler', async () => {
-      const clickHandler = vi.fn()
       const wrapper = mount(BaseButton, {
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       wrapper.vm.$emit = vi.fn()
@@ -160,9 +168,9 @@ describe('BaseButton', () => {
         props: {
           variant: 'danger',
           size: 'large',
-          disabled: true
+          disabled: true,
         },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.classes()).toContain('base-button')
@@ -175,9 +183,9 @@ describe('BaseButton', () => {
       const wrapper = mount(BaseButton, {
         props: {
           loading: true,
-          disabled: true
+          disabled: true,
         },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.classes()).toContain('base-button--loading')
@@ -190,7 +198,7 @@ describe('BaseButton', () => {
   describe('Accessibility', () => {
     it('maintains button semantics', () => {
       const wrapper = mount(BaseButton, {
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.find('button').element.tagName).toBe('BUTTON')
@@ -199,7 +207,7 @@ describe('BaseButton', () => {
     it('properly handles disabled state for screen readers', () => {
       const wrapper = mount(BaseButton, {
         props: { disabled: true },
-        slots: { default: 'Button' }
+        slots: { default: 'Button' },
       })
 
       expect(wrapper.find('button').attributes('disabled')).toBeDefined()

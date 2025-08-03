@@ -27,6 +27,6 @@ export const useUIStore = defineStore('ui', () => {
     toggleUpload,
     setUploadVisibility,
     hideUpload,
-    showUploadPanel
+    showUploadPanel,
   }
 })

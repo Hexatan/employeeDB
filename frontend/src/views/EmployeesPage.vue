@@ -13,13 +13,16 @@
       <!-- Sidebar -->
       <aside class="sidebar" :class="{ 'sidebar-open': uiStore.showUpload || employeeListEmpty }">
         <div class="sidebar-content">
-          <FileUpload @upload-success="handleUploadSuccess"/>
+          <FileUpload @upload-success="handleUploadSuccess" />
         </div>
       </aside>
 
       <!-- Main Content -->
-      <main class="main-content" :class="{ 'sidebar-open': uiStore.showUpload || employeeListEmpty }">
-        <EmployeeList v-show="!employeeListEmpty" ref="employeeListRef"/>
+      <main
+        class="main-content"
+        :class="{ 'sidebar-open': uiStore.showUpload || employeeListEmpty }"
+      >
+        <EmployeeList v-show="!employeeListEmpty" ref="employeeListRef" />
       </main>
     </div>
   </div>
@@ -28,13 +31,15 @@
 <script setup lang="ts">
 import EmployeeList from '@/components/EmployeeList.vue'
 import FileUpload from '@/components/FileUpload.vue'
-import {BaseButton} from '@/components/ui'
-import {computed, ref} from 'vue'
-import {useUIStore} from '@/stores/ui'
+import { BaseButton } from '@/components/ui'
+import { computed, ref } from 'vue'
+import { useUIStore } from '@/stores/ui'
 
 const uiStore = useUIStore()
 const employeeListRef = ref<InstanceType<typeof EmployeeList>>()
-const employeeListEmpty = computed(() => (!employeeListRef.value?.isLoading && !employeeListRef.value?.employees.length))
+const employeeListEmpty = computed(
+  () => !employeeListRef.value?.isLoading && !employeeListRef.value?.employees.length,
+)
 
 const handleUploadSuccess = () => {
   // Refresh the employee list after successful upload

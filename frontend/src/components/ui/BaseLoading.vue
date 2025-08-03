@@ -5,8 +5,8 @@
       `base-loading--${variant}`,
       {
         'base-loading--overlay': overlay,
-        'base-loading--fullscreen': fullscreen
-      }
+        'base-loading--fullscreen': fullscreen,
+      },
     ]"
   >
     <div class="base-loading__content">
@@ -15,7 +15,7 @@
         :class="[
           'base-loading__spinner',
           `base-loading__spinner--${size}`,
-          `base-loading__spinner--${spinnerType}`
+          `base-loading__spinner--${spinnerType}`,
         ]"
       >
         <div v-if="spinnerType === 'dots'" class="base-loading__dots">
@@ -41,9 +41,11 @@
 </template>
 
 <script setup lang="ts">
+import type { LoadingVariant, ComponentSize } from './index'
+
 interface Props {
-  variant?: 'light' | 'dark' | 'primary'
-  size?: 'small' | 'medium' | 'large'
+  variant?: LoadingVariant
+  size?: ComponentSize
   spinnerType?: 'circle' | 'dots' | 'pulse'
   text?: string
   overlay?: boolean
@@ -55,7 +57,7 @@ withDefaults(defineProps<Props>(), {
   size: 'medium',
   spinnerType: 'circle',
   overlay: false,
-  fullscreen: false
+  fullscreen: false,
 })
 </script>
 
@@ -238,7 +240,9 @@ withDefaults(defineProps<Props>(), {
 }
 
 @keyframes pulse-dot {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0);
     opacity: 0.5;
   }
@@ -249,7 +253,8 @@ withDefaults(defineProps<Props>(), {
 }
 
 @keyframes pulse-scale {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0);
     opacity: 1;
   }
