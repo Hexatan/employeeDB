@@ -173,9 +173,12 @@ onMounted(() => {
   fetchEmployees()
 })
 
-// Expose refresh method for parent components
+// Expose refresh method and state for parent components
 defineExpose({
-  refresh: fetchEmployees
+  refresh: fetchEmployees,
+  employees,
+  isLoading,
+  error
 })
 </script>
 

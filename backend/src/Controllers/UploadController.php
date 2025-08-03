@@ -27,13 +27,13 @@ class UploadController extends Controller
     {
         try {
             // Check if file was uploaded successfully
-            if (!isset($_FILES['csvFile']) || $_FILES['csvFile']['error'] !== UPLOAD_ERR_OK) {
+            if (!isset($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
                 $this->errorResponse('File upload failed.');
                 return;
             }
             
             // Validate MIME type
-            $mime_type = mime_content_type($_FILES['csvFile']['tmp_name']);
+            $mime_type = mime_content_type($_FILES['file']['tmp_name']);
             if ($mime_type !== 'text/csv' && $mime_type !== 'text/plain') {
                 $this->errorResponse('Invalid file type. Please upload a CSV.', 415);
                 return;
@@ -41,7 +41,7 @@ class UploadController extends Controller
             
             // Process the CSV file
             $importer = new EmployeeImporter();
-            $count = $importer->import($_FILES['csvFile']['tmp_name']);
+            $count = $importer->import($_FILES['file']['tmp_name']);
             
             if ($count > 0) {
                 $this->jsonResponse([
