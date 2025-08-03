@@ -18,14 +18,21 @@
         {{ isUploading ? 'Uploading...' : 'Upload File' }}
       </button>
     </form>
-    <div v-if="message" :class="messageClass" class="message">
-      {{ message }}
-    </div>
+    <BaseAlert
+      v-if="showAlert"
+      :variant="alertVariant"
+      :message="message"
+      :auto-close="alertVariant === 'success' ? 5000 : 0"
+      :model-value="showAlert"
+      @update:model-value="showAlert = $event"
+      dismissible
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue'
+import BaseAlert from './ui/BaseAlert.vue'
 
 // Define emits
 const emit = defineEmits<{
@@ -36,12 +43,14 @@ const fileInput = ref<HTMLInputElement>()
 const selectedFile = ref<File | null>(null)
 const isUploading = ref(false)
 const message = ref('')
-const messageClass = ref('')
+const alertVariant = ref<'success' | 'danger'>('success')
+const showAlert = ref(false)
 
 const handleFileSelect = (event: Event) => {
   const target = event.target as HTMLInputElement
   if (target.files && target.files.length > 0) {
     selectedFile.value = target.files[0]
+    showAlert.value = false
     message.value = ''
   }
 }
@@ -50,6 +59,7 @@ const handleSubmit = async () => {
   if (!selectedFile.value) return
 
   isUploading.value = true
+  showAlert.value = false
   message.value = ''
 
   try {
@@ -64,7 +74,8 @@ const handleSubmit = async () => {
 
     if (response.ok) {
       message.value = 'File uploaded successfully!'
-      messageClass.value = 'success'
+      alertVariant.value = 'success'
+      showAlert.value = true
       selectedFile.value = null
       if (fileInput.value) {
         fileInput.value.value = ''
@@ -76,7 +87,8 @@ const handleSubmit = async () => {
     }
   } catch (error) {
     message.value = 'Upload failed. Please try again.'
-    messageClass.value = 'error'
+    alertVariant.value = 'danger'
+    showAlert.value = true
   } finally {
     isUploading.value = false
   }
@@ -146,26 +158,6 @@ const handleSubmit = async () => {
   opacity: 0.6;
 }
 
-.message {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  border-radius: 6px;
-  text-align: center;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.success {
-  background-color: #d1e7dd;
-  color: #0f5132;
-  border: 1px solid #badbcc;
-}
-
-.error {
-  background-color: #f8d7da;
-  color: #842029;
-  border: 1px solid #f5c2c7;
-}
 
 /* Responsive adjustments for very narrow sidebars */
 @media (max-width: 400px) {
