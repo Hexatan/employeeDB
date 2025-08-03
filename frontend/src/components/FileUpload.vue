@@ -2,7 +2,15 @@
   <div class="file-upload">
     <h2>Upload CSV File</h2>
     <form @submit.prevent="handleSubmit">
-      <div class="upload-area">
+      <div
+        class="upload-area"
+        :class="{ 'drag-over': isDragOver }"
+        @dragover.prevent="handleDragOver"
+        @dragenter.prevent="handleDragEnter"
+        @dragleave.prevent="handleDragLeave"
+        @drop.prevent="handleDrop"
+        @click="handleAreaClick"
+      >
         <input
           type="file"
           ref="fileInput"
@@ -10,6 +18,9 @@
           accept=".csv"
           class="file-input"
         />
+        <div class="upload-instructions">
+          <p>Click to select a CSV file or drag and drop it here</p>
+        </div>
         <div v-if="selectedFile" class="file-info">Selected: {{ selectedFile.name }}</div>
       </div>
       <button type="submit" :disabled="!selectedFile || isUploading" class="upload-btn">
@@ -43,6 +54,7 @@ const isUploading = ref(false)
 const message = ref('')
 const alertVariant = ref<'success' | 'danger'>('success')
 const showAlert = ref(false)
+const isDragOver = ref(false)
 
 const handleFileSelect = (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -50,6 +62,56 @@ const handleFileSelect = (event: Event) => {
     selectedFile.value = target.files[0]
     showAlert.value = false
     message.value = ''
+  }
+}
+
+const handleDragOver = (event: DragEvent) => {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+const handleDragEnter = (event: DragEvent) => {
+  event.preventDefault()
+  event.stopPropagation()
+  isDragOver.value = true
+}
+
+const handleDragLeave = (event: DragEvent) => {
+  event.preventDefault()
+  event.stopPropagation()
+  // Only set isDragOver to false if we're leaving the upload area itself
+  // Check if the related target is not a child of the upload area
+  const uploadArea = event.currentTarget as HTMLElement
+  const relatedTarget = event.relatedTarget as HTMLElement
+  if (!uploadArea.contains(relatedTarget)) {
+    isDragOver.value = false
+  }
+}
+
+const handleDrop = (event: DragEvent) => {
+  event.preventDefault()
+  event.stopPropagation()
+  isDragOver.value = false
+
+  const files = event.dataTransfer?.files
+  if (files && files.length > 0) {
+    const file = files[0]
+    // Check if the file is a CSV
+    if (file.type === 'text/csv' || file.name.toLowerCase().endsWith('.csv')) {
+      selectedFile.value = file
+      showAlert.value = false
+      message.value = ''
+    } else {
+      message.value = 'Please select a CSV file.'
+      alertVariant.value = 'danger'
+      showAlert.value = true
+    }
+  }
+}
+
+const handleAreaClick = () => {
+  if (fileInput.value) {
+    fileInput.value.click()
   }
 }
 
@@ -114,16 +176,36 @@ const handleSubmit = async () => {
   margin-bottom: 1.5rem;
   background-color: #f8f9fa;
   transition: border-color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #007bff;
+    background-color: #f0f8ff;
+  }
+
+  &.drag-over {
+    border-color: #28a745;
+    background-color: #f0fff4;
+    border-style: solid;
+  }
 }
 
-.upload-area:hover {
-  border-color: #007bff;
-  background-color: #f0f8ff;
+.upload-instructions {
+  margin-bottom: 0.75rem;
+
+  p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.875rem;
+  }
 }
 
 .file-input {
-  margin-bottom: 0.75rem;
-  width: 100%;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
 
 .file-info {
@@ -131,6 +213,7 @@ const handleSubmit = async () => {
   font-size: 0.875rem;
   margin-top: 0.5rem;
   word-break: break-all;
+  font-weight: 700;
 }
 
 .upload-btn {
@@ -144,16 +227,16 @@ const handleSubmit = async () => {
   font-weight: 500;
   width: 100%;
   transition: background-color 0.2s ease;
-}
 
-.upload-btn:hover:not(:disabled) {
-  background-color: #0056b3;
-}
+  &:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
 
-.upload-btn:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-  opacity: 0.6;
+  &:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
 /* Responsive adjustments for very narrow sidebars */
