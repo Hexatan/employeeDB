@@ -18,11 +18,11 @@ services:
       - ./database:/docker-entrypoint-initdb.d
 
   # The Web Server Service (PHP + Apache)
-  web:
+  api:
     # Build the image from the Dockerfile in the 'backend' directory
     build:
       context: ./backend
-    container_name: engineer-test-web
+    container_name: engineer-test-api
     restart: unless-stopped
     depends_on:
       - db
@@ -35,6 +35,17 @@ services:
       DB_NAME: employee_db
       DB_USER: user
       DB_PASS: password
+
+  frontend:
+    container_name: engineer-test-front
+    image: node:lts
+    working_dir: /app
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./frontend/:/app
+    command: bash -c "npm install && npm run dev -- --host=0.0.0.0 --port 8081"
+
 
 # Define the named volume for data persistence
 volumes:
