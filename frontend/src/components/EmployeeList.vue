@@ -141,7 +141,7 @@ const saveEmail = async (employeeId: number) => {
 
   try {
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
-    const response = await fetch(`${apiBaseUrl}/api/update-employee.php`, {
+    const response = await fetch(`${apiBaseUrl}/api/employees/${employeeId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
