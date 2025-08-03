@@ -3,6 +3,7 @@ import EmployeeList from '@/components/EmployeeList.vue'
 import FileUpload from '@/components/FileUpload.vue'
 import {BaseButton} from '@/components/ui'
 import {computed, ref} from 'vue'
+import CompanySalaries from '@/components/CompanySalaries.vue'
 
 const showUpload = ref(false)
 const employeeListRef = ref<InstanceType<typeof EmployeeList>>()
@@ -38,6 +39,7 @@ const handleUploadSuccess = () => {
       <!-- Main Content -->
       <main class="main-content" :class="{ 'sidebar-open': showUpload || employeeListEmpty }">
         <EmployeeList v-show="!employeeListEmpty" ref="employeeListRef"/>
+        <CompanySalaries></CompanySalaries>
       </main>
     </div>
   </div>
