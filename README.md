@@ -17,11 +17,13 @@ This project is a simple employee database management system.
 
 #### Using Docker
 
-1.  Clone the repository.
-2.  Navigate to the project root directory.
-3.  Run `docker-compose up -d --build` to start the services.
-4.  The backend API will be available at `http://localhost:8080`.
-5.  The frontend application will be available at `http://localhost:8081`.
+1. Clone the repository.
+2. Navigate to the project root directory.
+3. Copy the template: `copy .env.example .env`
+4. Edit `.env` with your values
+5. Run `docker-compose up --env-file .env -d --build` to start the services.
+6. The backend API will be available at `http://localhost:8080`.
+7. The frontend application will be available at `http://localhost:8081`.
 
 ## Tech Stack
 
