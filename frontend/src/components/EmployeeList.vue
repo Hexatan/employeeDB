@@ -2,7 +2,7 @@
   <div class="employee-list">
     <h2>Employee List</h2>
 
-    <BaseLoading v-if="isLoading" text="Loading employees..." />
+    <BaseLoading v-if="isLoading" text="Loading employees..."/>
 
     <BaseAlert
       v-else-if="error"
@@ -54,14 +54,14 @@
         </BaseButton>
         <div v-else class="edit-actions">
           <BaseButton
-            variant="success"
+            variant="primary"
             size="small"
             @click="saveEmail(row.id)"
           >
             Save
           </BaseButton>
           <BaseButton
-            variant="secondary"
+            variant="outline"
             size="small"
             @click="cancelEdit"
           >
@@ -76,6 +76,7 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue'
 import {BaseAlert, BaseButton, BaseInput, BaseLoading, BaseTable} from '@/components/ui'
+import {useUIStore} from '@/stores/ui'
 
 interface Employee {
   id: number
@@ -88,12 +89,12 @@ interface Employee {
 
 // Table columns configuration
 const tableColumns = [
-  { key: 'id', label: 'ID', sortable: true },
-  { key: 'name', label: 'Name', sortable: true },
-  { key: 'email', label: 'Email', sortable: true },
-  { key: 'company_name', label: 'Company', sortable: true },
-  { key: 'salary', label: 'Salary', sortable: true, align: 'right' as const },
-  { key: 'actions', label: 'Actions', align: 'center' as const }
+  {key: 'id', label: 'ID', sortable: true},
+  {key: 'name', label: 'Name', sortable: true},
+  {key: 'email', label: 'Email', sortable: true},
+  {key: 'company_name', label: 'Company', sortable: true},
+  {key: 'salary', label: 'Salary', align: 'right' as const, sortable: true},
+  {key: 'actions', label: 'Actions', align: 'right' as const},
 ]
 
 const employees = ref<Employee[]>([])
@@ -101,6 +102,7 @@ const isLoading = ref(false)
 const error = ref('')
 const editingEmployeeId = ref<number | null>(null)
 const editingEmail = ref('')
+const uiStore = useUIStore()
 
 const fetchEmployees = async () => {
   isLoading.value = true
@@ -115,6 +117,10 @@ const fetchEmployees = async () => {
     }
 
     employees.value = await response.json()
+
+    if (employees.value.length === 0) {
+      uiStore.showUploadPanel()
+    }
   } catch (err) {
     error.value = 'Failed to load employees. Please try again.'
     console.error('Error fetching employees:', err)
@@ -148,8 +154,8 @@ const saveEmail = async (employeeId: number) => {
       },
       body: JSON.stringify({
         id: employeeId,
-        email: editingEmail.value
-      })
+        email: editingEmail.value,
+      }),
     })
 
     if (!response.ok) {
@@ -178,7 +184,7 @@ defineExpose({
   refresh: fetchEmployees,
   employees,
   isLoading,
-  error
+  error,
 })
 </script>
 

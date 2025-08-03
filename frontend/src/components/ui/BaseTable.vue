@@ -224,18 +224,28 @@ const formatCellValue = (value: any, column: TableColumn): string => {
 .base-table__th--sortable {
   cursor: pointer;
   user-select: none;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
 }
 
-.base-table__th--sortable:hover {
-  background-color: #f3f4f6;
-}
+.base-table__th--sortable
 
 .base-table__th--center {
   text-align: center;
+
+  .base-table__th-content {
+    justify-content: center;
+  }
 }
 
 .base-table__th--right {
   text-align: right;
+
+  .base-table__th-content {
+    justify-content: flex-end;
+  }
 }
 
 .base-table__th-content {

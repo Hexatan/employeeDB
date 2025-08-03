@@ -3,22 +3,22 @@
     <!-- Header -->
     <div class="page-header">
       <h2>Employee Management</h2>
-      <BaseButton v-show="!employeeListEmpty" @click="showUpload = !showUpload" class="upload-toggle">
-        {{ showUpload ? 'Hide Importer' : 'Import CSV' }}
+      <BaseButton v-show="!employeeListEmpty" @click="uiStore.toggleUpload()" class="upload-toggle">
+        {{ uiStore.showUpload ? 'Hide Importer' : 'Import CSV' }}
       </BaseButton>
     </div>
 
     <!-- Layout -->
     <div class="page-layout">
       <!-- Sidebar -->
-      <aside class="sidebar" :class="{ 'sidebar-open': showUpload || employeeListEmpty }">
+      <aside class="sidebar" :class="{ 'sidebar-open': uiStore.showUpload || employeeListEmpty }">
         <div class="sidebar-content">
           <FileUpload @upload-success="handleUploadSuccess"/>
         </div>
       </aside>
 
       <!-- Main Content -->
-      <main class="main-content" :class="{ 'sidebar-open': showUpload || employeeListEmpty }">
+      <main class="main-content" :class="{ 'sidebar-open': uiStore.showUpload || employeeListEmpty }">
         <EmployeeList v-show="!employeeListEmpty" ref="employeeListRef"/>
       </main>
     </div>
@@ -30,8 +30,9 @@ import EmployeeList from '@/components/EmployeeList.vue'
 import FileUpload from '@/components/FileUpload.vue'
 import {BaseButton} from '@/components/ui'
 import {computed, ref} from 'vue'
+import {useUIStore} from '@/stores/ui'
 
-const showUpload = ref(false)
+const uiStore = useUIStore()
 const employeeListRef = ref<InstanceType<typeof EmployeeList>>()
 const employeeListEmpty = computed(() => (!employeeListRef.value?.isLoading && !employeeListRef.value?.employees.length))
 
