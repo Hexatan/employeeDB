@@ -6,6 +6,8 @@ use App\Controllers\EmployeeController;
 use App\Controllers\CompanyController;
 use App\Controllers\UploadController;
 
+header("Access-Control-Allow-Origin: *");
+
 $router = new Router();
 
 // Employee routes
